@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sfml/Graphics.hpp>
-
+#include "Game.h"
+/*
 struct Character{
     float x, y, w, h, speedY, speed, jumpH = 0;
     float jumpCooldown = 500, jumpTimer = 0;
@@ -176,6 +177,7 @@ struct Game{
     }
 };
 
+*/
 
 
 auto main()  -> int{
@@ -185,8 +187,8 @@ auto main()  -> int{
         float time = clock.getElapsedTime().asMicroseconds();
         time = time / 1500;
         clock.restart();
-        game.update();
-        game.render(time);
+        game.update(time);
+        game.render();
     }
 }
 //хуйня не рабоает
