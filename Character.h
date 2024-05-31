@@ -14,6 +14,16 @@ struct Character {
     float frame;
     Character(float x, float y, float w, float h, std::string name);
     auto update(float time, sf::Vector2u vector2) -> void;
+    //auto animation(float time, float speed, std::vector<sf::IntRect> vec);
+    /*std::vector<sf::IntRect> standing = {
+        sf::IntRect(0, 96, 0, 96),
+        sf::IntRect(96, 96, 0, 96),
+        sf::IntRect(192, 96, 0, 96),
+        sf::IntRect(288, 96, 0, 96),
+        sf::IntRect(384, 96, 0, 96),
+        sf::IntRect(480, 96, 0, 96),
+    };*/
+    auto setPosition(float x, float y) -> void;
 };
 
 

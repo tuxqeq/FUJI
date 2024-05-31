@@ -119,7 +119,7 @@ struct Game{
     bool fullscreen = false;
     Game(){
         window = new sf::RenderWindow(sf::VideoMode(800, 600), "game", sf::Style::Titlebar | sf::Style::Close);
-        character = new Character(50, 500, 31, 32, "character.png");
+        character = new Character(50, 500, 31, 32, "ninja.png");
         window ->setFramerateLimit(120);
         background = new Background("back.png");
     }

@@ -111,11 +111,7 @@
 	[
 		{
 			"backtrace" : 2,
-			"id" : "sfml-graphics::@98af38147d5fa7e70f61"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "fmt::@976f4f0bee90b99ecdb6"
+			"id" : "sfml-system::@8cb1db2982443611e568"
 		},
 		{
 			"backtrace" : 2,
@@ -123,7 +119,11 @@
 		},
 		{
 			"backtrace" : 2,
-			"id" : "sfml-system::@8cb1db2982443611e568"
+			"id" : "sfml-graphics::@98af38147d5fa7e70f61"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "fmt::@976f4f0bee90b99ecdb6"
 		}
 	],
 	"id" : "Project_cpp::@6890427a1f51a3e7e1df",
