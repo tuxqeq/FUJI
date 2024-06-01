@@ -116,7 +116,7 @@ struct Game{
     //Window* window;
     Background* background;
     Character* character;
-    bool fullscreen = false;
+    bool ingame = false;
     Game(){
         window = new sf::RenderWindow(sf::VideoMode(800, 600), "game", sf::Style::Titlebar | sf::Style::Close);
         character = new Character(50, 500, 31, 32, "ninja.png");
@@ -139,8 +139,8 @@ struct Game{
                     break;
                 case sf::Event::KeyPressed: {
                     if (event.key.code == sf::Keyboard::Escape) {
-                        if(fullscreen){
-                            fullscreen = false;
+                        if(ingame){
+                            ingame = false;
                             window->close();
                             window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                                           sf::Style::Titlebar | sf::Style::Close);
@@ -151,8 +151,8 @@ struct Game{
                         }
                     }
                     if(event.key.code == sf::Keyboard::F8){
-                        if(not fullscreen) {
-                            fullscreen = true;
+                        if(not ingame) {
+                            ingame = true;
                             window->close();
                             window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                                           sf::Style::Titlebar | sf::Style::Close |

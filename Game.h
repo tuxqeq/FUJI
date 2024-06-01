@@ -6,9 +6,11 @@ struct Game {
     sf::RenderWindow* window;
     sf::Event event;
     //Window* window;
+    sf::RectangleShape newGamebutton;
+    sf::Texture textureNGButton;
     Background* background;
     Character* character;
-    bool fullscreen = false;
+    bool ingame = false;
 
     Game();
     ~Game();
