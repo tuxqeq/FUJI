@@ -4,7 +4,7 @@
 
 struct Character {
     float x, y, w, h, speedY, speed, jumpH = 0;
-    float jumpCooldown = 300, jumpTimer = 0;
+    float jumpCooldown = 400, jumpTimer = 0;
     float hitCooldown = 300, hitTimer = 0;
     float grdlevel = 960;
     bool inGame;

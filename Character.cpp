@@ -25,12 +25,12 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
     if(inGame) {
         collisionX(0);
     }
-    isOnGround = false;
+
     y += speedY*time;
     if(inGame) {
         collisionX(1);
     }
-
+    //isOnGround = false;
     jumpH -= speedY*time;
     bool ableToJump = false;
     sprite.setPosition(x, y);
@@ -58,7 +58,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         }
     }
 
-    if(jumpH <= 0){
+    if(not inGame and jumpH <= 0){
         speedY = 0;
         //y = grdlevel;
         isOnGround = true;
@@ -81,7 +81,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         dir = 1;
         speed = -0.4;
         if(isOnGround) {
-            frame += 0.002f * time;
+            frame += 0.02f * time;
             if (frame > 6) frame -= 6;
             sprite.setTextureRect(sf::IntRect(96 * int(frame) + 96, 192, -96, 96));
         }
@@ -101,7 +101,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         dir = 0;
         speed = 0.4;
         if(isOnGround) {
-            frame += 0.002f * time;
+            frame += 0.02f * time;
             if (frame > 6) frame -= 6;
             sprite.setTextureRect(sf::IntRect(96 * int(frame), 192, 96, 96));
         }
@@ -165,26 +165,27 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
 auto Character::collisionX(int num) -> void {
     for (int i = int(y/64); i < int((y + h)/64); i++) {
         for (int j = int((x)/64); j < int((x + w)/64); j++) {
-            if(Level::levels[i][j] == ' '){
-                if(speedY == 0 and num == 1){
-                    isOnGround = false;
-                }
-            }
+
             if(Level::levels[i][j] == '0'){
                 if(speed > 0 and num == 0) x = j*64 - 32;
                 if(speed < 0 and num == 0) x = j*64 + 64;
                 if(speedY > 0 and num == 1) {
+                    speedY = 0;
                     fmt::print("{}\n", i);
                     y = i*64 - 96;
                     fmt::print("{}\n", y);
                     //jumpH = 0;
-                    speedY = 0;
                     isOnGround = true;
                     jumping = false;
                 }
                 if (speedY < 0 and num == 1) {
-                    y = i * 64 + 64;
+                    y = i * 64 + 96;
                     speedY = 0;
+                }
+            }else if(Level::levels[int((y + h)/64)][int((x + 16)/64)] == ' '){
+                if(speedY == 0 and num == 1){
+                    fmt::println("hui");
+                    isOnGround = false;
                 }
             }
         }
