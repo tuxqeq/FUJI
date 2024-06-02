@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "Background.h"
+#include "Level.h"
 #pragma once
 
 struct Game {
@@ -10,6 +11,7 @@ struct Game {
     sf::Texture textureNGButton;
     Background* background;
     Character* character;
+    Level* level;
     bool ingame = false;
 
     Game();

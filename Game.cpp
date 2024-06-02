@@ -2,7 +2,7 @@
 
 Game::Game() {
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game", sf::Style::Titlebar | sf::Style::Close);
-    character = new Character(75, window->getSize().y - 200, 96, 96, "ninja.png", false);
+    character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
     //window ->setFramerateLimit(120);
     background = new Background("fudzimenu.png");
     newGamebutton = sf::RectangleShape(sf::Vector2f(120, 30));
@@ -29,14 +29,16 @@ auto Game::pollEvents() {
                 break;
             case sf::Event::MouseButtonPressed:{
                 if (newGamebutton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)))) {
+                    newGamebutton.setFillColor(sf::Color::White);
                     if(not ingame) {
-                        background = new Background("back.png");
+                        /*background = new Background(".png");*/
                         ingame = true;
                         window->close();
-                        window = new sf::RenderWindow(sf::VideoMode(800, 600), "GameStarted",
+                        window = new sf::RenderWindow(sf::VideoMode(1600, 1024), "GameStarted",
                                                       sf::Style::Titlebar | sf::Style::Close);
-                        character->setPosition(75, window->getSize().y - 200);
+                        character->setPosition(75, window->getSize().y - 160);
                         character->inGame = true;
+                        level = new Level(character);
                     }
                 }
             }
@@ -48,7 +50,7 @@ auto Game::pollEvents() {
                         window->close();
                         window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                                       sf::Style::Titlebar | sf::Style::Close);
-                        character->setPosition(75, window->getSize().y/1.f - 200);
+                        character->setPosition(10, window->getSize().y/1.f - 200);
                         character->inGame=false;
                     }
                     else {
@@ -84,6 +86,7 @@ auto Game::render() -> void{
     //character->update(time, window->getSize());
     window->draw(background->getBackground());
     if( not ingame) window->draw(newGamebutton);
+    if(ingame) level->draw(1, this->window);
     window->draw(character->sprite);
     window->display();
 }
