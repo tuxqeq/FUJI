@@ -163,10 +163,15 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
     }
 }
 auto Character::collisionX(int num) -> void {
-    for (int i = int(y/64); i < int((y + h)/64); i++) {
-        for (int j = int((x)/64); j < int((x + w)/64); j++) {
 
-            if(Level::levels[i][j] == '0'){
+    for (int i = int(y/64.f); i < int((y + h + 32)/64.f); i++) {
+        for (int j = int((x)/64.f); j < int((x + w)/64.f); j++) {
+            if(Level::levels[int((y + h)/64)][int((x+22)/64.f)] == ' '){
+                if(speedY == 0 and num == 1){
+                    isOnGround = false;
+                }
+            }
+            else if(Level::levels[i][j] == '0'){
                 if(speed > 0 and num == 0) x = j*64 - 32;
                 if(speed < 0 and num == 0) x = j*64 + 64;
                 if(speedY > 0 and num == 1) {
@@ -182,14 +187,10 @@ auto Character::collisionX(int num) -> void {
                     y = i * 64 + 96;
                     speedY = 0;
                 }
-            }else if(Level::levels[int((y + h)/64)][int((x + 16)/64)] == ' '){
-                if(speedY == 0 and num == 1){
-                    fmt::println("hui");
-                    isOnGround = false;
-                }
             }
         }
     }
+
 }
 
 
