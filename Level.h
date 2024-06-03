@@ -9,11 +9,11 @@
 struct Level {
     Background* background;
     Character* character;
-    sf::RectangleShape shape;
+    sf::Sprite shape;
     Level(Character* character);
     static std::vector</*std::vector<*/std::string> levels;
-    auto draw(int level, sf::RenderWindow* wnd) -> void;
-    auto collision(int num) -> void;
+    auto draw(int level, sf::RenderWindow* wnd, std::pair<float, float> pair) -> void;
+    sf::Texture texture;
 };
 
 

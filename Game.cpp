@@ -85,8 +85,8 @@ auto Game::render() -> void{
     window->clear(sf::Color(255, 0, 0, 255));
     //character->update(time, window->getSize());
     window->draw(background->getBackground());
-    if( not ingame) window->draw(newGamebutton);
-    if(ingame) level->draw(1, this->window);
+    if(not ingame) window->draw(newGamebutton);
+    if(ingame) level->draw(1, this->window, this->character->getXY());
     window->draw(character->sprite);
     window->display();
 }

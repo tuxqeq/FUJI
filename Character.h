@@ -6,6 +6,7 @@ struct Character {
     float x, y, w, h, speedY, speed, jumpH = 0;
     float jumpCooldown = 500, jumpTimer = 0;
     float hitCooldown = 300, hitTimer = 0;
+    float offsetX = 0, offsetY = 0;
     float grdlevel = 960;
     bool inGame;
     int dir=0;
@@ -19,7 +20,7 @@ struct Character {
     void collisionX(int num);
     auto update(float time, sf::Vector2u vector2) -> void;
     auto setPosition(float x, float y) -> void;
-
+    auto getXY() -> std::pair<float, float>;
 
 };
 

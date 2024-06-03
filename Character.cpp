@@ -22,6 +22,9 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
     else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
     x += speed*time;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
+        hit = true;
+    }
     if(inGame) {
         collisionX(0);
     }
@@ -33,8 +36,10 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
     //isOnGround = false;
     jumpH -= speedY*time;
     bool ableToJump = false;
-    sprite.setPosition(x, y);
-
+    sprite.setPosition(x - offsetX, y-offsetY);
+    if(x > 200) offsetX = x - 200;
+    //TODO offsetY
+    //if(y < 400) offsetY = y - 400;
     speed = 0;
     jumpTimer += time;
     hitTimer += time;
@@ -68,9 +73,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
     if(isOnGround and jumpTimer > jumpCooldown){
         ableToJump = true;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
-        hit = true;
-    }
+
     if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         and ableToJump
         and not crawling){
@@ -173,7 +176,9 @@ auto Character::collisionX(int num) -> void {
     }
     for (int i = y/48; i < (y + 48)/48; i++) {
         for (int j = x/48; j < (x + 48)/48; j++) {
-            if(Level::levels[i][j] == '0'){
+            if(Level::levels[i][j] == '0'
+                or Level::levels[i][j] == 'r'
+               or Level::levels[i][j] == 'w'){
                 if(speedY > 0 and num == 1) {
                     isOnGround = true;
                     speedY = 0;
@@ -186,11 +191,24 @@ auto Character::collisionX(int num) -> void {
                 if (speedY < 0 and num == 1) {
                     y = i * 48 + 48;
                 }
-                if(speed > 0 and num == 0) x = j*48 - 48;
-                if(speed < 0 and num == 0) x = j*48 + 48;
+                if(speed > 0 and num == 0) {
+                    if(hit){
+                        Level::levels[i][j] = ' ';
+                    }
+                    x = j*48 - 48;
+                }
+                if(speed < 0 and num == 0) {
+                    if(hit){
+                        Level::levels[i][j] = ' ';
+                    }
+                    x = j*48 + 48;
+                }
             }
         }
     }
 }
 
+auto Character::getXY() -> std::pair<float, float>{
+    return std::make_pair(offsetX, offsetY);
+}
 
