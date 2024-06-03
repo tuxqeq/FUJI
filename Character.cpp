@@ -20,7 +20,7 @@ bool crawling = false;
 bool isOnGround = false;
 auto Character::update(float time, sf::Vector2u vector2) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
-    else sprite.setScale(sf::Vector2f(1.f, 1.f));
+    else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
     x += speed*time;
     if(inGame) {
         collisionX(0);
@@ -45,6 +45,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         x = vector2.x;
     }
     if(jumping or not isOnGround){
+        isOnGround = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) speedY += 0.025f*time;
         speedY += 0.005f*time;
         if(dir == 1) {
@@ -163,34 +164,33 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
     }
 }
 auto Character::collisionX(int num) -> void {
-
-    for (int i = int(y/64.f); i < int((y + h + 32)/64.f); i++) {
-        for (int j = int((x)/64.f); j < int((x + w)/64.f); j++) {
-            if(Level::levels[int((y + h)/64)][int((x+22)/64.f)] == ' '){
-                if(speedY == 0 and num == 1){
-                    isOnGround = false;
-                }
-            }
-            else if(Level::levels[i][j] == '0'){
-                if(speed > 0 and num == 0) x = j*64 - 32;
-                if(speed < 0 and num == 0) x = j*64 + 64;
-                if(speedY > 0 and num == 1) {
-                    speedY = 0;
-                    fmt::print("{}\n", i);
-                    y = i*64 - 96;
-                    fmt::print("{}\n", y);
-                    //jumpH = 0;
-                    isOnGround = true;
-                    jumping = false;
-                }
-                if (speedY < 0 and num == 1) {
-                    y = i * 64 + 96;
-                    speedY = 0;
-                }
+    for (int k = x/48; k < (x + 48)/48; k++){
+        if(Level::levels[int(y + 48)/48][k] == ' '){
+            if(speedY == 0 and num == 1){
+                isOnGround = false;
             }
         }
     }
-
+    for (int i = y/48; i < (y + 48)/48; i++) {
+        for (int j = x/48; j < (x + 48)/48; j++) {
+            if(Level::levels[i][j] == '0'){
+                if(speedY > 0 and num == 1) {
+                    isOnGround = true;
+                    speedY = 0;
+                    fmt::print("{}\n", i);
+                    jumping = false;
+                    y = i*48 - 48;
+                    fmt::print("{}\n", y);
+                    //jumpH = 0;
+                }
+                if (speedY < 0 and num == 1) {
+                    y = i * 48 + 48;
+                }
+                if(speed > 0 and num == 0) x = j*48 - 48;
+                if(speed < 0 and num == 0) x = j*48 + 48;
+            }
+        }
+    }
 }
 
 

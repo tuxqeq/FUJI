@@ -2,7 +2,7 @@
 
 
 Level::Level(Character* character) : character(character){
-    shape = sf::RectangleShape(sf::Vector2f(64, 64));
+    shape = sf::RectangleShape(sf::Vector2f(48, 48));
     background = new Background("level1.png");
 }
 
@@ -19,10 +19,10 @@ std::vector</*std::vector<*/std::string> Level::levels = {
                 "0                                                                       r     k       k    k                                                         0",
                 "0                                                                      rr     k  k                                                                   0",
                 "0                                                                     rrr      kk                                                                    0",
-                "0               c    kckck                                           rrrr                                                                            0",
+                "0       0       c    kckck                                           rrrr                                                                            0",
                 "0                                      t0                           rrrrr                                                                            0",
-                "0             0                        00              t0          rrrrrr            G                                                               0",
-                "0      0      0  0       d             00              00         rrrrrrr                                                                            0",
+                "0          0  0                        00              t0          rrrrrr            G                                                               0",
+                "0       0  0  0  0       d             00              00         rrrrrrr                                                                            0",
                 "0000000000000000000000000PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
 
 };
@@ -34,7 +34,7 @@ auto Level::draw(int level, sf::RenderWindow *wnd) -> void {
         for (int j = 0; j < levels[i].size(); ++j) {
             if(levels[i][j] == 'P') shape.setFillColor(sf::Color::Magenta);
             if(levels[i][j] == ' ') continue;
-            shape.setPosition(j*64 + 32, i*64);
+            shape.setPosition(j*48, i*48);
             wnd->draw(shape);
         }
     }

@@ -34,9 +34,9 @@ auto Game::pollEvents() {
                         /*background = new Background(".png");*/
                         ingame = true;
                         window->close();
-                        window = new sf::RenderWindow(sf::VideoMode(1600, 1024), "GameStarted",
+                        window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
                                                       sf::Style::Titlebar | sf::Style::Close);
-                        character->setPosition(75, window->getSize().y - 160);
+                        character->setPosition(75, window->getSize().y - 96);
                         character->inGame = true;
                         level = new Level(character);
                     }
