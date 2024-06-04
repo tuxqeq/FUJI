@@ -12,6 +12,7 @@ struct Level {
     sf::Sprite shape;
     sf::Texture texture;
     sf::Texture spike;
+    int num;
     Level(int num);
     static std::vector<std::vector<std::string>> levelll;
     static std::vector<std::string> levels;

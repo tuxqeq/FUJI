@@ -21,7 +21,7 @@ std::vector<std::vector<std::string>> Level::levelll = {
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
-
+//TODO make levels not static
 std::vector<std::string> Level::levels=  {
         "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
         "w                            d                                                                                                                       w",
@@ -42,15 +42,15 @@ std::vector<std::string> Level::levels=  {
         "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
 };
 
-Level::Level(int num){
+Level::Level(int num) : num(num){
     //shape = sf::RectangleShape(sf::Vector2f(48, 48));
     background = new Background("level1.png");
     texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
-    for(int i; i < 17; i++){
+    /*for(int i = 0; i < 17; i++){
         levels[i] = levelll[num][i];
-    }
+    }*/
 }
 
 

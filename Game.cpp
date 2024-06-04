@@ -105,6 +105,9 @@ auto Game::newGame() -> void {
     character->setPosition(10, window->getSize().y/1.f - 200);
     character->inGame=false;
     character->health = 5;
+    /*for(int i; i < 17; i++){
+        Level::levels[i] = Level::levelll[level->num][i];
+    }*/
 }
 
 auto Game::newLevel() -> void {
@@ -115,4 +118,7 @@ auto Game::newLevel() -> void {
     character->setPosition(75, window->getSize().y - 96);
     character->inGame = true;
     character->minusheart = false;
+    /*for(int i = 0; i < 17; i++){
+        Level::levels[i] = Level::levelll[level->num][i];
+    }*/
 }
