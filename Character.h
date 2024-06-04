@@ -8,12 +8,16 @@ struct Character {
     float hitCooldown = 300, hitTimer = 0;
     float offsetX = 0, offsetY = 0;
     float grdlevel = 960;
+
+    int health = 5;
     bool inGame;
     int dir=0;
+    std::vector<sf::Sprite> hearts;
     std::string name;
     sf::Image image;
     sf::Sprite sprite;
     sf::Texture texture;
+    sf::Texture heart;
     float frame, hitframe, crawlFrame = 0;
     Character(float x, float y, float w, float h, std::string name, bool inGame);
     auto crawlingAnim(float time, int dir, bool isOnGround) -> void;
@@ -21,7 +25,7 @@ struct Character {
     auto update(float time, sf::Vector2u vector2) -> void;
     auto setPosition(float x, float y) -> void;
     auto getXY() -> std::pair<float, float>;
-
+    auto drawhealth(sf::RenderWindow* wnd) -> void;
 };
 
 

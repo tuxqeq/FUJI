@@ -13,6 +13,12 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
     sprite.setPosition(x, y);
     jumpH = 0;
     grdlevel = y;
+    heart.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Character/humanheart.png");
+    hearts = std::vector<sf::Sprite>(5, sf::Sprite(heart));
+    for (int i = 0; i < 5; i++){
+        hearts[i].setTextureRect(sf::IntRect(0, 0, 64, 64));
+        hearts[i].setScale(0.75, 0.75);
+    }
 }
 bool jumping = false;
 bool hit = false;
@@ -20,7 +26,7 @@ bool crawling = false;
 bool isOnGround = false;
 auto Character::update(float time, sf::Vector2u vector2) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
-    else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    //else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
     x += speed*time;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
         hit = true;
@@ -36,8 +42,8 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
     //isOnGround = false;
     jumpH -= speedY*time;
     bool ableToJump = false;
-    sprite.setPosition(x - offsetX, y-offsetY);
-    if(x > 200) offsetX = x - 200;
+    sprite.setPosition(x - offsetX, y-offsetY - 72);
+    if(inGame and x > 200) offsetX = x - 200;
     //TODO offsetY
     //if(y < 400) offsetY = y - 400;
     speed = 0;
@@ -91,7 +97,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         }
         if(isOnGround and hit and hitTimer > hitCooldown){
             speed = 0;
-            hitframe += 0.009f * time;
+            hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
                 hit = false;
@@ -111,7 +117,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         }
         if(isOnGround and hit and hitTimer > hitCooldown){
             speed = 0;
-            hitframe += 0.009f * time;
+            hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
                 hit = false;
@@ -127,7 +133,7 @@ auto Character::update(float time, sf::Vector2u vector2) -> void {
         else sprite.setTextureRect(sf::IntRect(96*int(frame), 0, 96, 96));
         if(hit and hitTimer > hitCooldown){
             speed = 0;
-            hitframe += 0.009f * time;
+            hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
                 hit = false;
@@ -168,17 +174,28 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
 }
 auto Character::collisionX(int num) -> void {
     for (int k = x/48; k < (x + 48)/48; k++){
-        if(Level::levels[int(y + 48)/48][k] == ' '){
+        if(Level::levels[int(y + 48)/48][k] == ' ' or Level::levels[int(y + 48)/48][k] == 's'){
             if(speedY == 0 and num == 1){
                 isOnGround = false;
             }
         }
+        if(k > x/48 and k < (x + 48)/48) {
+            if (Level::levels[int(y + 48) / 48 - 1][k] == 's') {
+                health -= 1;
+                offsetX = 0;
+                x = 75;
+                y = 720;
+            }
+        }
     }
     for (int i = y/48; i < (y + 48)/48; i++) {
-        for (int j = x/48; j < (x + 48)/48; j++) {
+        for (int j = (x + 24)/48; j < (x + 48)/48; j++) {
             if(Level::levels[i][j] == '0'
-                or Level::levels[i][j] == 'r'
-               or Level::levels[i][j] == 'w'){
+            or Level::levels[i][j] == 'd'
+            or Level::levels[i][j] == 'C'
+            //or Level::levels[i][j] == 's'
+            or Level::levels[i][j] == 'b'
+            or Level::levels[i][j] == 'w'){
                 if(speedY > 0 and num == 1) {
                     isOnGround = true;
                     speedY = 0;
@@ -186,6 +203,7 @@ auto Character::collisionX(int num) -> void {
                     jumping = false;
                     y = i*48 - 48;
                     fmt::print("{}\n", y);
+
                     //jumpH = 0;
                 }
                 if (speedY < 0 and num == 1) {
@@ -201,7 +219,7 @@ auto Character::collisionX(int num) -> void {
                     if(hit){
                         Level::levels[i][j] = ' ';
                     }
-                    x = j*48 + 48;
+                    x = j*48 + 24;
                 }
             }
         }
@@ -210,5 +228,12 @@ auto Character::collisionX(int num) -> void {
 
 auto Character::getXY() -> std::pair<float, float>{
     return std::make_pair(offsetX, offsetY);
+}
+
+auto Character::drawhealth(sf::RenderWindow *wnd) -> void {
+    for (int i = 0; i < health; ++i) {
+        hearts[i].setPosition(i * 48, 0);
+        wnd->draw(hearts[i]);
+    }
 }
 

@@ -86,7 +86,10 @@ auto Game::render() -> void{
     //character->update(time, window->getSize());
     window->draw(background->getBackground());
     if(not ingame) window->draw(newGamebutton);
-    if(ingame) level->draw(1, this->window, this->character->getXY());
+    if(ingame) {
+        level->draw(1, this->window, this->character->getXY());
+        character->drawhealth(this->window);
+    }
     window->draw(character->sprite);
     window->display();
 }
