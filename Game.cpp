@@ -38,7 +38,7 @@ auto Game::pollEvents() {
                                                       sf::Style::Titlebar | sf::Style::Close);
                         character->setPosition(75, window->getSize().y - 96);
                         character->inGame = true;
-                        level = new Level(character);
+                        level = new Level(1);
                     }
                 }
             }
@@ -78,7 +78,9 @@ auto Game::pollEvents() {
 auto Game::update(float time) -> void{
     pollEvents();
     background->setSize(window->getSize());
-    character->update(time, window->getSize());
+    if(character->minusheart) newLevel();
+    if(character->health == 0) newGame();
+    else character->update(time, window->getSize(), this->window);
 }
 
 auto Game::render() -> void{
@@ -87,9 +89,30 @@ auto Game::render() -> void{
     window->draw(background->getBackground());
     if(not ingame) window->draw(newGamebutton);
     if(ingame) {
-        level->draw(1, this->window, this->character->getXY());
+        level->draw(this->window, this->character->getXY());
         character->drawhealth(this->window);
     }
     window->draw(character->sprite);
     window->display();
+}
+
+auto Game::newGame() -> void {
+    background = new Background("fudzimenu.png");
+    ingame = false;
+    window->close();
+    window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
+                                  sf::Style::Titlebar | sf::Style::Close);
+    character->setPosition(10, window->getSize().y/1.f - 200);
+    character->inGame=false;
+    character->health = 5;
+}
+
+auto Game::newLevel() -> void {
+    window->close();
+    level = new Level(1);
+    window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
+                                  sf::Style::Titlebar | sf::Style::Close);
+    character->setPosition(75, window->getSize().y - 96);
+    character->inGame = true;
+    character->minusheart = false;
 }

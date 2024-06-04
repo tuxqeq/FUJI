@@ -1,15 +1,28 @@
 #include "Level.h"
 
+std::vector<std::vector<std::string>> Level::levelll = {
+        {
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                     w               kk                                                                w",
+                "w                            d                                                      k  k         w                                                   w",
+                "w                            d                                                      k      k  k                                                      w",
+                "w              w                                                                   kkk   kkk  kkk                           w                        w",
+                "w                                                       b                            k  k         k                           kk                     w",
+                "w       c       c            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
+                "w                          b b                        bbb            bb                    rr                          d     k                       w",
+                "w                           bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
+                "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
+                "w       bssb                 b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
+                "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        }
+};
 
-Level::Level(Character* character) : character(character){
-    //shape = sf::RectangleShape(sf::Vector2f(48, 48));
-    background = new Background("level1.png");
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
-    shape.setTexture(texture);
-    spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
-}
-
-std::vector</*std::vector<*/std::string> Level::levels = {
+std::vector<std::string> Level::levels=  {
         "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
         "w                            d                                                                                                                       w",
         "w                            d                                                                                                                       w",
@@ -21,13 +34,26 @@ std::vector</*std::vector<*/std::string> Level::levels = {
         "w                            d                                                      k      k  k                                                      w",
         "w              w                                                                   kkk   kkk  kkk                           w                        w",
         "w                                                       b                            k  k         k                           kk                     w",
-        "w       c       c            b                         bb   bbbbbb   bb              kk     r   kk            g              k  k    d               w",
+        "w       c       c            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
         "w                          b b                        bbb            bb                    rr                          d     k                       w",
         "w                           bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
         "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
         "w       bssb                 b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
         "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
 };
+
+Level::Level(int num){
+    //shape = sf::RectangleShape(sf::Vector2f(48, 48));
+    background = new Background("level1.png");
+    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
+    shape.setTexture(texture);
+    spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
+    for(int i; i < 17; i++){
+        levels[i] = levelll[num][i];
+    }
+}
+
+
 
 /*The "0" represents solid ground or boundaries.
 The "s" s represents spikes
@@ -37,7 +63,8 @@ The "b" represents a kind of platform or block.
 The "r" represents a rough terrain or something similar.
 The "G" represents the goal or endpoint.*/
 
-auto Level::draw(int level, sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
+auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
+    //levels = levelll[1];
     background->setSize(wnd->getSize());
     wnd->draw(background->getBackground());
     for(int i=0; i < 17; i++){

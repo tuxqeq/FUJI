@@ -24,7 +24,7 @@ bool jumping = false;
 bool hit = false;
 bool crawling = false;
 bool isOnGround = false;
-auto Character::update(float time, sf::Vector2u vector2) -> void {
+auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
     //else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
     x += speed*time;
@@ -180,11 +180,12 @@ auto Character::collisionX(int num) -> void {
             }
         }
         if(k > x/48 and k < (x + 48)/48) {
-            if (Level::levels[int(y + 48) / 48 - 1][k] == 's') {
+            if (Level::levels[int(y + 24) / 48][k] == 's') {
                 health -= 1;
                 offsetX = 0;
                 x = 75;
                 y = 720;
+                minusheart = true;
             }
         }
     }
@@ -230,10 +231,11 @@ auto Character::getXY() -> std::pair<float, float>{
     return std::make_pair(offsetX, offsetY);
 }
 
-auto Character::drawhealth(sf::RenderWindow *wnd) -> void {
+auto Character::drawhealth(sf::RenderWindow* wnd) -> void {
     for (int i = 0; i < health; ++i) {
         hearts[i].setPosition(i * 48, 0);
         wnd->draw(hearts[i]);
     }
 }
+
 

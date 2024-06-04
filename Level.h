@@ -12,9 +12,11 @@ struct Level {
     sf::Sprite shape;
     sf::Texture texture;
     sf::Texture spike;
-    Level(Character* character);
-    static std::vector</*std::vector<*/std::string> levels;
-    auto draw(int level, sf::RenderWindow* wnd, std::pair<float, float> pair) -> void;
+    Level(int num);
+    static std::vector<std::vector<std::string>> levelll;
+    static std::vector<std::string> levels;
+    static std::vector<std::string> level1;
+    auto draw(sf::RenderWindow* wnd, std::pair<float, float> pair) -> void;
 
 };
 

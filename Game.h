@@ -20,7 +20,8 @@ struct Game {
     auto pollEvents();
     auto update(float time) -> void;
     auto render() -> void;
-
+    auto newLevel() -> void;
+    auto newGame() -> void;
 };
 
 
