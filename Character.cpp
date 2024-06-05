@@ -20,13 +20,13 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
         hearts[i].setScale(0.75, 0.75);
     }
 }
-bool jumping = false;
+/*bool jumping = false;
 bool hit = false;
 bool crawling = false;
-bool isOnGround = false;
+bool isOnGround = false;*/
 auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
-    //else sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    //else sprite.setScale(1, 1);
     x += speed*time;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
         hit = true;
@@ -59,14 +59,16 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         isOnGround = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) speedY += 0.025f*time;
         speedY += 0.005f*time;
-        if(dir == 1) {
-            frame += 0.02f * time;
-            if (frame > 8) frame -= 8;
-            sprite.setTextureRect(sf::IntRect(96 * int(frame) + 96, 672, -96, 96));
-        }else{
-            frame += 0.02f * time;
-            if (frame > 8) frame -= 8;
-            sprite.setTextureRect(sf::IntRect(96 * int(frame), 672, 96, 96));
+        if(not crawling){
+            if (dir == 1) {
+                frame += 0.02f * time;
+                if (frame > 8) frame -= 8;
+                sprite.setTextureRect(sf::IntRect(96 * int(frame) + 96, 672, -96, 96));
+            } else {
+                frame += 0.02f * time;
+                if (frame > 8) frame -= 8;
+                sprite.setTextureRect(sf::IntRect(96 * int(frame), 672, 96, 96));
+            }
         }
     }
 
@@ -76,18 +78,26 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         isOnGround = true;
         jumping = false;
     }
-    if(isOnGround and jumpTimer > jumpCooldown){
+    if(isOnGround and jumpTimer > jumpCooldown and not inCave){
         ableToJump = true;
     }
 
     if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         and ableToJump
-        and not crawling){
+        and not crawling
+        and not inCave){
         speedY = -1;
         jumping = true;
         jumpTimer = 0;
 
-    }if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+    }
+    if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) or sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+       and crawling
+       and not inCave){
+        uncrawlingAnim(time, dir);
+
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) or sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
         dir = 1;
         speed = -0.4;
         if(isOnGround) {
@@ -104,6 +114,9 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
                 hitTimer = 0;
             }
             sprite.setTextureRect(sf::IntRect(96 * int(hitframe)+96, 576, -96, 96));
+        }
+        if(isOnGround and (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down))){
+            crawling = true;
         }
         crawlingAnim(time, dir, isOnGround);
 
@@ -125,8 +138,11 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
             }
             sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
         }
+        if(isOnGround and (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down))){
+            crawling = true;
+        }
         crawlingAnim(time, dir, isOnGround);
-    }else if(not jumping){
+    }else if(not jumping and not inCave){
         frame += 0.009f * time;
         if(frame > 6) frame -= 6;
         if(dir == 1) sprite.setTextureRect(sf::IntRect(96*int(frame) + 96, 0, -96, 96));
@@ -140,6 +156,9 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
                 hitTimer = 0;
             }
             sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
+        }
+        if(isOnGround and (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down))){
+            crawling = true;
         }
         crawlingAnim(time, dir, isOnGround);
     }
@@ -155,34 +174,53 @@ auto Character::setPosition(float x, float y) -> void {
 }
 
 auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
-    if(isOnGround and (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down))){
+    if(isOnGround and /*(sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down) or */crawling){
         speed = speed/2;
+        crawling = true;
         if(crawlFrame < 5){
             crawlFrame += 0.05f * time;
-
-            crawling = true;
         }
         if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame), 288, 96, 96));
         else if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame) + 96, 288, -96, 96));
-    }else if (crawling){
+    }/*if (crawling){
         crawlFrame += 0.05f * time;
         if(crawlFrame > 9) {
             crawling = false;
+            crawlingAn = false;
             crawlFrame -= 9;
         }
         if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame), 288, 96, 96));
         else if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame) + 96, 288, -96, 96));
-    }
+    }*/
 }
+
+auto Character::uncrawlingAnim(float time, int dir) -> void {
+    crawlFrame += 0.05f * time;
+    while (crawlFrame < 10) {
+        crawlFrame += 0.05f * time;
+    }
+    crawling = false;
+    crawlFrame -= 9;
+    if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame), 288, 96, 96));
+    else if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame) + 96, 288, -96, 96));
+}
+
 auto Character::collisionX(int num) -> void {
-    for (int k = x/48; k < (x + 48)/48; k++){
+    if(clevel->curlevel[(y)/48][(x+24)/48] == 'q'){
+        //crawling = true;
+        inCave = true;
+    }
+    if(clevel->curlevel[(y)/48][(x+24)/48] != 'q'){
+        inCave = false;
+    }
+    for (int k = (x)/48; k < (x + 48)/48; k++){
         if(clevel->curlevel[int(y + 48) / 48][k] == ' ' or clevel->curlevel[int(y + 48) / 48][k] == 's'){
             if(speedY == 0 and num == 1){
                 isOnGround = false;
             }
         }
-        if(k > x/48 and k < (x + 48)/48) {
-            if (clevel->curlevel[int(y + 24) / 48][k] == 's') {
+        if(k >= (x-6)/48 and k < (x + 48)/48) {
+            if (clevel->curlevel[int(y + 16) / 48][k] == 's') {
                 health -= 1;
                 offsetX = 0;
                 x = 75;
@@ -214,15 +252,39 @@ auto Character::collisionX(int num) -> void {
                 }
                 if(speed > 0 and num == 0) {
                     if(hit){
-                        clevel->curlevel[i][j] = ' ';
+                        if(clevel->curlevel[i-1][j] == 'b'){
+                            clevel->curlevel[i][j] = 'q';
+                            hit = false;
+                        }if(clevel->curlevel[i-1][j] == ' '){
+                            clevel->curlevel[i][j] = ' ';
+                            hit = false;
+                        }
                     }
                     x = j*48 - 48;
                 }
                 if(speed < 0 and num == 0) {
                     if(hit){
-                        clevel->curlevel[i][j] = ' ';
+                        if(clevel->curlevel[i-1][j] == 'b'){
+                            clevel->curlevel[i][j] = 'q';
+                            hit = false;
+                        }if(clevel->curlevel[i-1][j] == ' '){
+                            clevel->curlevel[i][j] = ' ';
+                            hit = false;
+                        }
                     }
                     x = j*48 + 24;
+                }
+            }
+            if(clevel->curlevel[i][j] == 'q'){
+                if(speed > 0){
+                    if(not crawling){
+                        x = j*48 - 48;
+                    }
+                }
+                if(speed < 0){
+                    if(not crawling){
+                        x = j*48 + 24;
+                    }
                 }
             }
         }
@@ -235,7 +297,8 @@ auto Character::getXY() -> std::pair<float, float>{
 
 auto Character::drawhealth(sf::RenderWindow* wnd) -> void {
     for (int i = 0; i < health; ++i) {
-        hearts[i].setPosition(i * 48, 0);
+        hearts[i].setPosition(i * 32, 0);
+        hearts[i].setScale(0.5, 0.5);
         wnd->draw(hearts[i]);
     }
 }

@@ -11,36 +11,25 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                     w               kk                                                                w",
                 "w                            d                                                      k  k         w                                                   w",
                 "w                            d                                                      k      k  k                                                      w",
-                "w              w                                                                   kkk   kkk  kkk                           w                        w",
-                "w                                                       b                            k  k         k                           kk                     w",
-                "w       c       c            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
+                "w                                                                                  kkk   kkk  kkk                           w                        w",
+                "w                        b                              b                            k  k         k                           kk                     w",
+                "w                            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
                 "w                          b b                        bbb            bb                    rr                          d     k                       w",
                 "w                           bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
-                "w       bssb                 b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
+                "w       bssbqqqqqqqqqqq      b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
-//TODO make curlevel not static
-/*std::vector<std::string> Level::curlevel=  {
-        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-        "w                            d                                                                                                                       w",
-        "w                            d                                                                                                                       w",
-        "w                            d                                                                                                                       w",
-        "w                            d                                                                                                                       w",
-        "w                            d                                                                                                                       w",
-        "w                            d                                     w               kk                                                                w",
-        "w                            d                                                      k  k         w                                                   w",
-        "w                            d                                                      k      k  k                                                      w",
-        "w              w                                                                   kkk   kkk  kkk                           w                        w",
-        "w                                                       b                            k  k         k                           kk                     w",
-        "w       c       c            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
-        "w                          b b                        bbb            bb                    rr                          d     k                       w",
-        "w                           bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
-        "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
-        "w       bssb                 b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
-        "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-};*/
+
+
+/*The "0" represents solid ground or boundaries.
+The "s" s represents spikes
+The "w" represents walls
+The "c" represents coins or collectibles.
+The "b" represents a kind of platform or block.
+The "r" represents a rough terrain or something similar.
+The "G" represents the goal or endpoint.*/
 
 Level::Level(int num) : num(num){
     //shape = sf::RectangleShape(sf::Vector2f(48, 48));
@@ -54,13 +43,6 @@ Level::Level(int num) : num(num){
 
 
 
-/*The "0" represents solid ground or boundaries.
-The "s" s represents spikes
-The "w" represents walls
-The "c" represents coins or collectibles.
-The "b" represents a kind of platform or block.
-The "r" represents a rough terrain or something similar.
-The "G" represents the goal or endpoint.*/
 
 auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
     //curlevel = levels[1];
@@ -151,6 +133,19 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     shape.setTextureRect(sf::IntRect(160, 32, 32, 32));
                 }
                 shape.setScale(1.5, 1.5);
+            }
+            if(curlevel[i][j] == 'q' and curlevel[i-1][j] != 'b'){
+                curlevel[i][j] = ' ';
+            }
+            if(curlevel[i][j] == 'q') {
+                if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] == 'q')
+                    shape.setTextureRect(sf::IntRect(224, 113, 32, 15));
+                if (curlevel[i][j - 1] == 'q' and curlevel[i][j + 1] == 'q')
+                    shape.setTextureRect(sf::IntRect(256, 113, 32, 15));
+                if (curlevel[i][j - 1] == 'q' and curlevel[i][j + 1] != 'q')
+                    shape.setTextureRect(sf::IntRect(288, 113, 32, 15));
+                if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] != 'q')
+                    shape.setTextureRect(sf::IntRect(320, 113, 32, 15));
             }
             if(curlevel[i][j] == 'w') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));

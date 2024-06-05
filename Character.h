@@ -20,9 +20,15 @@ struct Character {
     sf::Sprite sprite;
     sf::Texture texture;
     sf::Texture heart;
+    bool jumping = false;
+    bool hit = false;
+    bool crawling = false;
+    bool isOnGround = false;
+    bool inCave = false;
     float frame, hitframe, crawlFrame = 0;
     Character(float x, float y, float w, float h, std::string name, bool inGame);
     auto crawlingAnim(float time, int dir, bool isOnGround) -> void;
+    auto uncrawlingAnim(float time, int dir) -> void;
     void collisionX(int num);
     auto update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void;
     auto setPosition(float x, float y) -> void;
