@@ -1,4 +1,5 @@
 #include <sfml/Graphics.hpp>
+#include "Level.h"
 //#include "Game.h"
 #pragma once
 
@@ -13,6 +14,7 @@ struct Character {
     bool inGame;
     int dir=0;
     std::vector<sf::Sprite> hearts;
+    Level* clevel;
     std::string name;
     sf::Image image;
     sf::Sprite sprite;

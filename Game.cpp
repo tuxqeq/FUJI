@@ -34,11 +34,13 @@ auto Game::pollEvents() {
                         /*background = new Background(".png");*/
                         ingame = true;
                         window->close();
+                        level = new Level(0);
                         window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
                                                       sf::Style::Titlebar | sf::Style::Close);
                         character->setPosition(75, window->getSize().y - 96);
+                        character->clevel = level;
                         character->inGame = true;
-                        level = new Level(1);
+
                     }
                 }
             }
@@ -102,23 +104,25 @@ auto Game::newGame() -> void {
     window->close();
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                   sf::Style::Titlebar | sf::Style::Close);
-    character->setPosition(10, window->getSize().y/1.f - 200);
+    /*character->setPosition(10, window->getSize().y/1.f - 200);
     character->inGame=false;
-    character->health = 5;
+    character->health = 5;*/
+    character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
     /*for(int i; i < 17; i++){
-        Level::levels[i] = Level::levelll[level->num][i];
+        Level::curlevel[i] = Level::levels[level->num][i];
     }*/
 }
 
 auto Game::newLevel() -> void {
-    window->close();
-    level = new Level(1);
-    window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
-                                  sf::Style::Titlebar | sf::Style::Close);
+    //window->close();
+    level = new Level(0);
+    //window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
+                                  //sf::Style::Titlebar | sf::Style::Close);
     character->setPosition(75, window->getSize().y - 96);
+    character->clevel = level;
     character->inGame = true;
     character->minusheart = false;
     /*for(int i = 0; i < 17; i++){
-        Level::levels[i] = Level::levelll[level->num][i];
+        Level::curlevel[i] = Level::levels[level->num][i];
     }*/
 }

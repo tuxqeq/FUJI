@@ -1,6 +1,6 @@
 #include "Level.h"
 
-std::vector<std::vector<std::string>> Level::levelll = {
+std::vector<std::vector<std::string>> Level::levels = {
         {
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                 "w                            d                                                                                                                       w",
@@ -21,8 +21,8 @@ std::vector<std::vector<std::string>> Level::levelll = {
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
-//TODO make levels not static
-std::vector<std::string> Level::levels=  {
+//TODO make curlevel not static
+/*std::vector<std::string> Level::curlevel=  {
         "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
         "w                            d                                                                                                                       w",
         "w                            d                                                                                                                       w",
@@ -40,7 +40,7 @@ std::vector<std::string> Level::levels=  {
         "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
         "w       bssb                 b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
         "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-};
+};*/
 
 Level::Level(int num) : num(num){
     //shape = sf::RectangleShape(sf::Vector2f(48, 48));
@@ -48,9 +48,8 @@ Level::Level(int num) : num(num){
     texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
-    /*for(int i = 0; i < 17; i++){
-        levels[i] = levelll[num][i];
-    }*/
+
+    curlevel = levels[num];
 }
 
 
@@ -64,109 +63,109 @@ The "r" represents a rough terrain or something similar.
 The "G" represents the goal or endpoint.*/
 
 auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
-    //levels = levelll[1];
+    //curlevel = levels[1];
     background->setSize(wnd->getSize());
     wnd->draw(background->getBackground());
     for(int i=0; i < 17; i++){
-        for (int j = 0; j < levels[i].size(); ++j) {
+        for (int j = 0; j < curlevel[i].size(); ++j) {
             shape.setTexture(texture);
-            if(levels[i][j] == '0') {
+            if(curlevel[i][j] == '0') {
                 if(j == 0) shape.setTextureRect(sf::IntRect(0, 128, 32, 32));
-                if(j == levels[i].size()-1) shape.setTextureRect(sf::IntRect(64, 128, 32, 32));
-                else if (levels[i][j - 1] == '0' and levels[i][j + 1] == '0') shape.setTextureRect(sf::IntRect(32, 128, 32, 32));
+                if(j == curlevel[i].size() - 1) shape.setTextureRect(sf::IntRect(64, 128, 32, 32));
+                else if (curlevel[i][j - 1] == '0' and curlevel[i][j + 1] == '0') shape.setTextureRect(sf::IntRect(32, 128, 32, 32));
                 shape.setScale(1.5, 1.5);
             }
-            if(levels[i][j] == 'd'){
-                if (levels[i+1][j] != 'd'){
-                    if (levels[i][j - 1] != 'd' and levels[i][j + 1] == 'd')
+            if(curlevel[i][j] == 'd'){
+                if (curlevel[i + 1][j] != 'd'){
+                    if (curlevel[i][j - 1] != 'd' and curlevel[i][j + 1] == 'd')
                         shape.setTextureRect(sf::IntRect(0, 32, 32, -32));
-                    if (levels[i][j - 1] == 'd' and levels[i][j + 1] == 'd')
+                    if (curlevel[i][j - 1] == 'd' and curlevel[i][j + 1] == 'd')
                         shape.setTextureRect(sf::IntRect(32, 32, 32, -32));
-                    if (levels[i][j - 1] == 'd' and levels[i][j + 1] != 'd')
+                    if (curlevel[i][j - 1] == 'd' and curlevel[i][j + 1] != 'd')
                         shape.setTextureRect(sf::IntRect(64, 32, 32, -32));
-                    if (levels[i][j - 1] != 'd' and levels[i][j + 1] != 'd')
+                    if (curlevel[i][j - 1] != 'd' and curlevel[i][j + 1] != 'd')
                         shape.setTextureRect(sf::IntRect(128, 32, 32, -32));
                 }
-                if(levels[i+1][j] == 'd') {
-                    if (levels[i][j - 1] != 'd' and levels[i][j + 1] == 'd')
+                if(curlevel[i + 1][j] == 'd') {
+                    if (curlevel[i][j - 1] != 'd' and curlevel[i][j + 1] == 'd')
                         shape.setTextureRect(sf::IntRect(128, 160, 32, 32));
-                    if (levels[i][j - 1] == 'd' and levels[i][j + 1] == 'd')
+                    if (curlevel[i][j - 1] == 'd' and curlevel[i][j + 1] == 'd')
                         shape.setTextureRect(sf::IntRect(144, 160, 32, 32));
-                    if (levels[i][j - 1] == 'd' and levels[i][j + 1] != 'd')
+                    if (curlevel[i][j - 1] == 'd' and curlevel[i][j + 1] != 'd')
                         shape.setTextureRect(sf::IntRect(160, 160, 32, 32));
-                    if (levels[i][j - 1] != 'd' and levels[i][j + 1] != 'd')
+                    if (curlevel[i][j - 1] != 'd' and curlevel[i][j + 1] != 'd')
                         shape.setTextureRect(sf::IntRect(144, 160, 32, 32));
                 }
             }
-            if(levels[i][j] == 'b') {
+            if(curlevel[i][j] == 'b') {
                 shape.setTextureRect(sf::IntRect(160, 32, 32, 32));
 
                 //sides
-                if (levels[i-1][j] != 'b' and levels[i+1][j] != 'b'){
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] == 'b')
+                if (curlevel[i - 1][j] != 'b' and curlevel[i + 1][j] != 'b'){
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(160, 0, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] == 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(192, 0, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(224, 0, 32, 32));
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(288, 0, 32, 32));
                 }
-                if (levels[i-1][j] != 'b' and levels[i+1][j] == 'b'){
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] == 'b')
+                if (curlevel[i - 1][j] != 'b' and curlevel[i + 1][j] == 'b'){
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(0, 0, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] == 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(32, 0, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(64, 0, 32, 32));
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(128, 0, 32, 32));
                 }
                 //down
-                if(levels[i-1][j] == 'b' and levels[i+1][j] == 'b') {
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] == 'b')
+                if(curlevel[i - 1][j] == 'b' and curlevel[i + 1][j] == 'b') {
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(128, 160, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] == 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(144, 160, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(160, 160, 32, 32));
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(160, 160, 32, 32));
                 }
-                if(levels[i-1][j] == 'b' and levels[i+1][j] != 'b') {
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] == 'b')
+                if(curlevel[i - 1][j] == 'b' and curlevel[i + 1][j] != 'b') {
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(256, 160, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] == 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] == 'b')
                         shape.setTextureRect(sf::IntRect(272, 160, 32, 32));
-                    if (levels[i][j - 1] == 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] == 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(288, 160, 32, 32));
-                    if (levels[i][j - 1] != 'b' and levels[i][j + 1] != 'b')
+                    if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(272, 160, 32, 32));
                 }
                 //shape.setTextureRect(sf::IntRect(160, 32, 32, 32));
-                if(levels[i-1][j] != 'b'
-                   and levels[i+1][j] != 'b'
-                   and levels[i][j+1] != 'b'
-                   and levels[i][j-1] != 'b'
+                if(curlevel[i - 1][j] != 'b'
+                   and curlevel[i + 1][j] != 'b'
+                   and curlevel[i][j + 1] != 'b'
+                   and curlevel[i][j - 1] != 'b'
                         ){
                     shape.setTextureRect(sf::IntRect(160, 32, 32, 32));
                 }
                 shape.setScale(1.5, 1.5);
             }
-            if(levels[i][j] == 'w') {
+            if(curlevel[i][j] == 'w') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
                 shape.setScale(1.5, 1.5);
             }
-            if(levels[i][j] == 'C') {
+            if(curlevel[i][j] == 'C') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
                 shape.setScale(1.5, 1.5);
             }
-            if(levels[i][j] == 's') {
+            if(curlevel[i][j] == 's') {
                 shape.setTexture(spike);
                 shape.setTextureRect(sf::IntRect(0, 0, 48, 48));
                 shape.setScale(1, 1);
             }
-            if(levels[i][j] == ' ') continue;
+            if(curlevel[i][j] == ' ') continue;
             //shape.setScale(1.5, 1.5);
             shape.setPosition(j*48 - pair.first/* - wnd->getSize().x/2*/,
                               i*48 - pair.second - 48/* + wnd->getSize().y/1.5*/);
@@ -174,4 +173,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
         }
     }
 }
+
+Level::~Level() {}
+
 

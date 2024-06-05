@@ -150,6 +150,8 @@ auto Character::setPosition(float x, float y) -> void {
     this->x = x;
     this->y = y;
     grdlevel = y;
+    isOnGround = true;
+    jumpH = 0;
 }
 
 auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
@@ -174,13 +176,13 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
 }
 auto Character::collisionX(int num) -> void {
     for (int k = x/48; k < (x + 48)/48; k++){
-        if(Level::levels[int(y + 48)/48][k] == ' ' or Level::levels[int(y + 48)/48][k] == 's'){
+        if(clevel->curlevel[int(y + 48) / 48][k] == ' ' or clevel->curlevel[int(y + 48) / 48][k] == 's'){
             if(speedY == 0 and num == 1){
                 isOnGround = false;
             }
         }
         if(k > x/48 and k < (x + 48)/48) {
-            if (Level::levels[int(y + 24) / 48][k] == 's') {
+            if (clevel->curlevel[int(y + 24) / 48][k] == 's') {
                 health -= 1;
                 offsetX = 0;
                 x = 75;
@@ -191,12 +193,12 @@ auto Character::collisionX(int num) -> void {
     }
     for (int i = y/48; i < (y + 48)/48; i++) {
         for (int j = (x + 24)/48; j < (x + 48)/48; j++) {
-            if(Level::levels[i][j] == '0'
-            or Level::levels[i][j] == 'd'
-            or Level::levels[i][j] == 'C'
-            //or Level::levels[i][j] == 's'
-            or Level::levels[i][j] == 'b'
-            or Level::levels[i][j] == 'w'){
+            if(clevel->curlevel[i][j] == '0'
+            or clevel->curlevel[i][j] == 'd'
+            or clevel->curlevel[i][j] == 'C'
+            //or Level::curlevel[i][j] == 's'
+            or clevel->curlevel[i][j] == 'b'
+            or clevel->curlevel[i][j] == 'w'){
                 if(speedY > 0 and num == 1) {
                     isOnGround = true;
                     speedY = 0;
@@ -212,13 +214,13 @@ auto Character::collisionX(int num) -> void {
                 }
                 if(speed > 0 and num == 0) {
                     if(hit){
-                        Level::levels[i][j] = ' ';
+                        clevel->curlevel[i][j] = ' ';
                     }
                     x = j*48 - 48;
                 }
                 if(speed < 0 and num == 0) {
                     if(hit){
-                        Level::levels[i][j] = ' ';
+                        clevel->curlevel[i][j] = ' ';
                     }
                     x = j*48 + 24;
                 }
