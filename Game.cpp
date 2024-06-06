@@ -47,13 +47,14 @@ auto Game::pollEvents() {
             case sf::Event::KeyPressed: {
                 if (event.key.code == sf::Keyboard::Escape) {
                     if(ingame){
-                        background = new Background("fudzimenu.png");
+                        /*background = new Background("fudzimenu.png");
                         ingame = false;
                         window->close();
                         window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                                       sf::Style::Titlebar | sf::Style::Close);
                         character->setPosition(10, window->getSize().y/1.f - 200);
-                        character->inGame=false;
+                        character->inGame=false;*/
+                        newGame();
                     }
                     else {
                         window->close();

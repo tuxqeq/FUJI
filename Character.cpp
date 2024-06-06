@@ -7,9 +7,7 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
     image.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Character/" + name);
     texture.loadFromImage(image);
     sprite.setTexture(texture);
-    //sprite.setColor(sf::Color::Black);
     sprite.setTextureRect(sf::IntRect(0, 0, w, h));
-    //sprite.setScale(0.66, 0.66);
     sprite.setPosition(x, y);
     jumpH = 0;
     grdlevel = y;
@@ -20,10 +18,7 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
         hearts[i].setScale(0.75, 0.75);
     }
 }
-/*bool jumping = false;
-bool hit = false;
-bool crawling = false;
-bool isOnGround = false;*/
+
 auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
     //else sprite.setScale(1, 1);
@@ -44,8 +39,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     bool ableToJump = false;
     sprite.setPosition(x - offsetX, y-offsetY - 72);
     if(inGame and x > 200) offsetX = x - 200;
-    //TODO offsetY
-    //if(y < 400) offsetY = y - 400;
+    if(y < 400 and inGame) offsetY = y - 400;
     speed = 0;
     jumpTimer += time;
     hitTimer += time;
@@ -182,16 +176,7 @@ auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
         }
         if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame), 288, 96, 96));
         else if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame) + 96, 288, -96, 96));
-    }/*if (crawling){
-        crawlFrame += 0.05f * time;
-        if(crawlFrame > 9) {
-            crawling = false;
-            crawlingAn = false;
-            crawlFrame -= 9;
-        }
-        if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame), 288, 96, 96));
-        else if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(crawlFrame) + 96, 288, -96, 96));
-    }*/
+    }
 }
 
 auto Character::uncrawlingAnim(float time, int dir) -> void {
@@ -214,18 +199,21 @@ auto Character::collisionX(int num) -> void {
         inCave = false;
     }
     for (int k = (x)/48; k < (x + 48)/48; k++){
-        if(clevel->curlevel[int(y + 48) / 48][k] == ' ' or clevel->curlevel[int(y + 48) / 48][k] == 's'){
-            if(speedY == 0 and num == 1){
-                isOnGround = false;
+        if(k >= (x)/48 and k <= (x + 24)/48) {
+            if (clevel->curlevel[int(y + 48) / 48][k] == ' ' or clevel->curlevel[int(y + 48) / 48][k] == 's') {
+                if (speedY == 0 and num == 1) {
+                    isOnGround = false;
+                }
             }
         }
-        if(k >= (x-6)/48 and k < (x + 48)/48) {
+        if(k >= (x)/48 and k < (x + 48)/48) {
             if (clevel->curlevel[int(y + 16) / 48][k] == 's') {
                 health -= 1;
                 offsetX = 0;
                 x = 75;
                 y = 720;
                 minusheart = true;
+                crawling = false;
             }
         }
     }

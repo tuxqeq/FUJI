@@ -15,7 +15,7 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                        b                              b                            k  k         k                           kk                     w",
                 "w                            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
                 "w                          b b                        bbb            bb                    rr                          d     k                       w",
-                "w                           bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
+                "w                  e        bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
                 "w       bssbqqqqqqqqqqq      b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
