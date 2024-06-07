@@ -39,6 +39,7 @@ Level::Level(int num) : num(num){
     spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
 
     curlevel = levels[num];
+    enemy = new Enemy("slime.png", 0, 500, 500);
 }
 
 
@@ -152,7 +153,9 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 shape.setScale(1.5, 1.5);
             }
             if(curlevel[i][j] == 'e'){
-                auto enemy = Enemy("slime", 0, j * 48, i *48);
+                enemy->setPosition(j*48, i*48 - 48);
+                enemy->setOffset(pair);
+                //curlevel[i][j] = ' ';
                 //enemy.curlevel = this;
                 //enemies.push_back(enemy);
             }
@@ -172,6 +175,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
             wnd->draw(shape);
         }
     }
+
 }
 
 Level::~Level() {}

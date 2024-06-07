@@ -10,9 +10,11 @@ struct Level {
     sf::Sprite shape;
     sf::Texture texture;
     sf::Texture spike;
+    Enemy* enemy;
     int num;
     Level(int num);
     //std::vector<Enemy> enemies;
+
     static std::vector<std::vector<std::string>> levels;
     std::vector<std::string> curlevel;
     auto draw(sf::RenderWindow* wnd, std::pair<float, float> pair) -> void;

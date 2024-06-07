@@ -84,6 +84,7 @@ auto Game::update(float time) -> void{
     if(character->minusheart) newLevel();
     if(character->health == 0) newGame();
     else character->update(time, window->getSize(), this->window);
+    if(ingame){ character->clevel->enemy->update(time); }
 }
 
 auto Game::render() -> void{
@@ -94,6 +95,7 @@ auto Game::render() -> void{
     if(ingame) {
         level->draw(this->window, this->character->getXY());
         character->drawhealth(this->window);
+        window->draw(character->clevel->enemy->sprite);
     }
     window->draw(character->sprite);
     window->display();

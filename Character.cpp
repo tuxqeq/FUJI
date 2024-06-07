@@ -156,6 +156,9 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         }
         crawlingAnim(time, dir, isOnGround);
     }
+    if(inGame){
+        clevel->enemy->setOffset(getXY());
+    }
 }
 
 auto Character::setPosition(float x, float y) -> void {
