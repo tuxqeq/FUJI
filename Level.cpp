@@ -151,6 +151,11 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
                 shape.setScale(1.5, 1.5);
             }
+            if(curlevel[i][j] == 'e'){
+                auto enemy = Enemy("slime", 0, j * 48, i *48);
+                //enemy.curlevel = this;
+                //enemies.push_back(enemy);
+            }
             if(curlevel[i][j] == 'C') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
                 shape.setScale(1.5, 1.5);
