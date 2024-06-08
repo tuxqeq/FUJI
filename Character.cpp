@@ -28,6 +28,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     }
     if(inGame) {
         collisionX(0);
+        EnemyCollision();
     }
 
     y += speedY*time;
@@ -157,7 +158,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         crawlingAnim(time, dir, isOnGround);
     }
     if(inGame){
-        clevel->enemy->setOffset(getXY());
+        clevel->enemy->setOffset(getOffsetXY());
     }
 }
 
@@ -282,7 +283,7 @@ auto Character::collisionX(int num) -> void {
     }
 }
 
-auto Character::getXY() -> std::pair<float, float>{
+auto Character::getOffsetXY() -> std::pair<float, float>{
     return std::make_pair(offsetX, offsetY);
 }
 
@@ -291,6 +292,44 @@ auto Character::drawhealth(sf::RenderWindow* wnd) -> void {
         hearts[i].setPosition(i * 32, 0);
         hearts[i].setScale(0.5, 0.5);
         wnd->draw(hearts[i]);
+    }
+}
+
+auto Character::EnemyCollision() -> void {
+    sf::FloatRect spritechar = sprite.getGlobalBounds();
+    sf::FloatRect spritecharForhit = sprite.getGlobalBounds();
+    sf::FloatRect enemychar = clevel->enemy->sprite.getGlobalBounds();
+    sf::FloatRect enemycharForhit = clevel->enemy->sprite.getGlobalBounds();
+    spritecharForhit.width = 50;
+    spritecharForhit.height = 48;
+
+    spritechar.width = 20;
+    spritechar.height = 48;
+
+    enemychar.width = 22;
+    enemychar.height = 10;
+    if(spritecharForhit.intersects(enemycharForhit) and hit){
+        clevel->enemy->enemyhit();
+    }
+    if (spritechar.intersects(enemychar)){
+        //clevel->enemy->health -= 1;
+        //x = x - 100;
+        if (speedY > 0){
+            //clevel->enemy->health -= 1;
+            jumping = true;
+            speedY = -1;
+            jumping = true;
+            jumpTimer = 0;
+            clevel->enemy->enemyhit();
+        }else {
+            health -= 1;
+            offsetX = 0;
+            x = 75;
+            y = 720;
+            minusheart = true;
+            fmt::println("{}", health);
+        }
+
     }
 }
 

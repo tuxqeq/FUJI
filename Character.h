@@ -32,8 +32,9 @@ struct Character {
     void collisionX(int num);
     auto update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void;
     auto setPosition(float x, float y) -> void;
-    auto getXY() -> std::pair<float, float>;
+    auto getOffsetXY() -> std::pair<float, float>;
     auto drawhealth(sf::RenderWindow* wnd) -> void;
+    auto EnemyCollision() -> void;
 };
 
 

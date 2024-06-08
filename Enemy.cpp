@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(std::string name, float speed, float x, float y) : speed(speed), x(x), y(y){
+Enemy::Enemy(std::string name, float speed, float x, float y, int health) : speed(speed), x(x), y(y), health(health){
     texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Enemies/" + name);
     sprite.setTexture(texture);
     sprite.setPosition(x, y);
@@ -12,17 +12,17 @@ auto Enemy::update(float time) -> void {
     x = speed * time;
 
     //collision();
-    deadtimer += time * 0.005;
-    curFrame += time * 0.005;
+    deadtimer += time * 0.009;
+    curFrame += time * 0.009;
     if (curFrame > 4) curFrame-= 4;
     sprite.setTextureRect(sf::IntRect(24*int(curFrame), 0, 24, 24));
-    if (!life) {
+    if (not life) {
         sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
         deadtimer = 0;
     }
-    /*if(deadtimer == 2){
-        sprite.setTextureRect(sf::IntRect (0, 0, 10, 10));
-    }*/
+    if(deadtimer < 4){
+        sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
+    }
 }
 
 auto Enemy::draw(sf::RenderWindow* wnd) -> void {
@@ -40,6 +40,19 @@ auto Enemy::setOffset(std::pair<float, float> pair) -> void {
     sprite.setPosition(x - pair.first, y-pair.second);
 }
 
+auto Enemy::collision() -> void {
+
+}
+
+auto Enemy::enemyhit() -> void {
+    health -= 1;
+    if(health == 0){
+        life = false;
+        deadtimer = 0;
+        x = 10000;
+        y = 10000;
+    }
+}
 
 
 

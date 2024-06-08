@@ -93,7 +93,7 @@ auto Game::render() -> void{
     window->draw(background->getBackground());
     if(not ingame) window->draw(newGamebutton);
     if(ingame) {
-        level->draw(this->window, this->character->getXY());
+        level->draw(this->window, this->character->getOffsetXY());
         character->drawhealth(this->window);
         window->draw(character->clevel->enemy->sprite);
     }
