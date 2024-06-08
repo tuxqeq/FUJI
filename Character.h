@@ -11,8 +11,10 @@ struct Character {
     float grdlevel = 960;
     bool minusheart = false;
     int health = 5;
+    float redtimer = 100;
     bool inGame;
     int dir=0;
+    bool end = false;
     std::vector<sf::Sprite> hearts;
     Level* clevel;
     std::string name;

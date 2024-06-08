@@ -22,6 +22,12 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
 auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
     if(not inGame) sprite.setScale(0.75, 0.75);
     //else sprite.setScale(1, 1);
+    redtimer += time;
+    if(redtimer < 100) {
+        sprite.setColor(sf::Color(255, 0, 0, 127));
+    }else{
+        sprite.setColor(sf::Color::White);
+    }
     x += speed*time;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
         hit = true;
@@ -276,6 +282,9 @@ auto Character::collisionX(int num) -> void {
                     }
                 }
             }
+            if(clevel->curlevel[i][j] == 'E'){
+                end = true;
+            }
         }
     }
 }
@@ -322,7 +331,9 @@ auto Character::EnemyCollision() -> void {
             } else {
                 health -= 1;
                 //x = x - 100;
+                redtimer = 0;
                 x = speed >= 0 ? x - 100 : x + 100;
+                sprite.setColor(sf::Color(255, 0, 0, 127));
                 fmt::println("{}", health);
             }
 

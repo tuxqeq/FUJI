@@ -1,6 +1,8 @@
 #include "Character.h"
 #include "Background.h"
 #include "Level.h"
+#include "Button.h"
+#include <fmt/core.h>
 #pragma once
 
 struct Game {
@@ -13,6 +15,12 @@ struct Game {
     Character* character;
     Level* level;
     bool ingame = false;
+    bool inmidlev = false;
+    Button* newGame;
+    Button* continueGame;
+    Button* nextLevel;
+    Button* goToMainMenu;
+    Button* intstructions;
 
     Game();
     ~Game();
@@ -20,8 +28,10 @@ struct Game {
     auto pollEvents();
     auto update(float time) -> void;
     auto render() -> void;
-    auto newLevel() -> void;
-    auto newGame() -> void;
+    auto restartLevel() -> void;
+    auto newLevel(int num) -> void;
+    auto mainmenu() -> void;
+    auto levelEnd() -> void;
 };
 
 

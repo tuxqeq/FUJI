@@ -11,14 +11,14 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                                                                                                       w",
                 "w                            d                                     w               kk                                                                w",
                 "w                            d                                                      k  k         w                                                   w",
-                "w                            d                                                      k      k  k                                                      w",
-                "w                                                                                  kkk   kkk  kkk                           w                        w",
-                "w                        b                              b        p                   k  k         k                           kk                     w",
-                "w                            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
-                "w                          b b                        bbb            bb                    rr                          d     k                       w",
-                "w                  p         b                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
-                "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
-                "w   e   bssbqqqqqqqqqqq  e esbssseesbb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
+                "w                        E   d                                                      k      k  k                                                      w",
+                "w                                                                               E   kkk   kkk  kkk                           w                        w",
+                "w                        b                              b        p              E     k  k         k                           kk                     w",
+                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
+                "w                          b b                        bbb            bb         E           rr                          d     k                       w",
+                "w                  p         b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
+                "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
+                "w   e   bssbqqqqqqqqqqq  e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
@@ -228,7 +228,11 @@ auto Level::drawEnemies(sf::RenderWindow *wnd) -> void {
     }
 }
 
-Level::~Level() {}
+Level::~Level() {
+    for (auto i : enemies){
+        delete i;
+    }
+}
 
 
 

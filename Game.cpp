@@ -4,11 +4,15 @@ Game::Game() {
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game", sf::Style::Titlebar | sf::Style::Close);
     character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
     background = new Background("fudzimenu.png");
-    newGamebutton = sf::RectangleShape(sf::Vector2f(120, 30));
+    /*newGamebutton = sf::RectangleShape(sf::Vector2f(120, 30));
     newGamebutton.setPosition(150, 225);
     textureNGButton.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Buttons/newgame.png");
     newGamebutton.setTexture(&textureNGButton);
-    newGamebutton.setTextureRect(sf::IntRect(0, 0, 771, 161));
+    newGamebutton.setTextureRect(sf::IntRect(0, 0, 771, 161));*/
+    newGame = new Button(150, 225, 120, 30, 720, 180, "newgame.png");
+    continueGame = new Button(320, 225, 120, 30, 720, 180, "continue.png");
+    nextLevel = new Button(130, 200, 120, 30, 720, 180, "nextlevel.png");
+    goToMainMenu = new Button(300, 200, 120, 30, 720, 180, "mainmenu.png");
 }
 
 Game::~Game(){
@@ -26,7 +30,7 @@ auto Game::pollEvents() {
                 window->close();
                 break;
             case sf::Event::MouseButtonPressed:{
-                if (newGamebutton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)))) {
+                /*if (newGamebutton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)))) {
                     newGamebutton.setFillColor(sf::Color::White);
                     if(not ingame) {
                         ingame = true;
@@ -39,12 +43,39 @@ auto Game::pollEvents() {
                         character->inGame = true;
 
                     }
+                }*/
+                if(inmidlev){
+                    if(goToMainMenu->isPressed(window)){
+                        mainmenu();
+                    }
+                    if(nextLevel->isPressed(window)){
+                        newLevel(1);
+                    }
+                }
+
+                if(newGame->isPressed(window)){
+                    //fmt::print("new button");
+                    /*if(not ingame) {
+                        ingame = true;
+                        window->close();
+                        level = new Level(0);
+                        window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
+                                                      sf::Style::Titlebar | sf::Style::Close);
+                        character->setPosition(75, window->getSize().y - 96);
+                        character->clevel = level;
+                        character->inGame = true;
+
+                    }*/
+                    newLevel(0);
+                }
+                if(continueGame->isPressed(window)){
+                    fmt::print("continue");
                 }
             }
             case sf::Event::KeyPressed: {
                 if (event.key.code == sf::Keyboard::Escape) {
-                    if(ingame){
-                        newGame();
+                    if(ingame or inmidlev){
+                        mainmenu();
                     }
                     else {
                         window->close();
@@ -60,8 +91,9 @@ auto Game::pollEvents() {
 auto Game::update(float time) -> void{
     pollEvents();
     background->setSize(window->getSize());
-    if(character->minusheart) newLevel();
-    if(character->health == 0) newGame();
+    if(character->minusheart) restartLevel();
+    if(character->end) levelEnd();
+    if(character->health == 0) mainmenu();
     else character->update(time, window->getSize(), this->window);
     if(ingame) character->clevel->updateEnemies(time);
 }
@@ -69,8 +101,15 @@ auto Game::update(float time) -> void{
 auto Game::render() -> void{
     window->clear(sf::Color(255, 0, 0, 255));
     window->draw(background->getBackground());
-    if(not ingame) window->draw(newGamebutton);
-    if(ingame) {
+    if(not ingame and not inmidlev) {
+        window->draw(newGame->shape);
+        window->draw(continueGame->shape);
+    }
+    else if(inmidlev){
+        window->draw(nextLevel->shape);
+        window->draw(goToMainMenu->shape);
+    }
+    else if(ingame) {
         level->draw(this->window, this->character->getOffsetXY());
         character->drawhealth(this->window);
         character->clevel->drawEnemies(window);
@@ -79,17 +118,51 @@ auto Game::render() -> void{
     window->display();
 }
 
-auto Game::newGame() -> void {
+auto Game::mainmenu() -> void {
     background = new Background("fudzimenu.png");
+    inmidlev =  false;
     ingame = false;
     window->close();
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
                                   sf::Style::Titlebar | sf::Style::Close);
+    delete character;
     character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
 }
 
-auto Game::newLevel() -> void {
+auto Game::restartLevel() -> void {
     character->setPosition(75, window->getSize().y - 96);
     character->inGame = true;
     character->minusheart = false;
+}
+
+
+
+auto Game::levelEnd() -> void {
+    background = new Background("midlev.png");
+    ingame = false;
+    inmidlev = true;
+    character->inGame = false;
+    //character->saveScore();
+    character->end = false;
+    window->close();
+    window = new sf::RenderWindow(sf::VideoMode(600, 400), "game",
+                                  sf::Style::Titlebar | sf::Style::Close);
+    character->setPosition(10000, 10000);
+
+}
+
+auto Game::newLevel(int num) -> void {
+    if(not ingame or inmidlev) {
+        inmidlev = false;
+        ingame = true;
+        window->close();
+        level = new Level(num);
+        window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
+                                      sf::Style::Titlebar | sf::Style::Close);
+        character->setPosition(75, window->getSize().y - 96);
+        character->clevel = level;
+        character->inGame = true;
+
+    }
+
 }
