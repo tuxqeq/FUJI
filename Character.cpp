@@ -150,15 +150,13 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
                 hit = false;
                 hitTimer = 0;
             }
-            sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
+            if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
+            if(dir == 1) sprite.setTextureRect(sf::IntRect(96 * int(hitframe)+96, 576, -96, 96));
         }
         if(isOnGround and (sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down))){
             crawling = true;
         }
         crawlingAnim(time, dir, isOnGround);
-    }
-    if(inGame){
-        clevel->enemy->setOffset(getOffsetXY());
     }
 }
 
@@ -226,7 +224,6 @@ auto Character::collisionX(int num) -> void {
             if(clevel->curlevel[i][j] == '0'
             or clevel->curlevel[i][j] == 'd'
             or clevel->curlevel[i][j] == 'C'
-            //or Level::curlevel[i][j] == 's'
             or clevel->curlevel[i][j] == 'b'
             or clevel->curlevel[i][j] == 'w'){
                 if(speedY > 0 and num == 1) {
@@ -296,40 +293,40 @@ auto Character::drawhealth(sf::RenderWindow* wnd) -> void {
 }
 
 auto Character::EnemyCollision() -> void {
-    sf::FloatRect spritechar = sprite.getGlobalBounds();
-    sf::FloatRect spritecharForhit = sprite.getGlobalBounds();
-    sf::FloatRect enemychar = clevel->enemy->sprite.getGlobalBounds();
-    sf::FloatRect enemycharForhit = clevel->enemy->sprite.getGlobalBounds();
-    spritecharForhit.width = 50;
-    spritecharForhit.height = 48;
+    for (auto i : clevel->enemies){
+        auto spritechar = sprite.getGlobalBounds();
+        auto spritecharForhit = sprite.getGlobalBounds();
+        auto enemychar = i->sprite.getGlobalBounds();
+        auto enemycharForhit = i->sprite.getGlobalBounds();
+        spritecharForhit.width = 72;
+        spritecharForhit.height = 72;
 
-    spritechar.width = 20;
-    spritechar.height = 48;
+        spritechar.width = 15;
+        spritechar.height = 48;
+        spritechar.left += 10;
 
-    enemychar.width = 22;
-    enemychar.height = 10;
-    if(spritecharForhit.intersects(enemycharForhit) and hit){
-        clevel->enemy->enemyhit();
-    }
-    if (spritechar.intersects(enemychar)){
-        //clevel->enemy->health -= 1;
-        //x = x - 100;
-        if (speedY > 0){
-            //clevel->enemy->health -= 1;
-            jumping = true;
-            speedY = -1;
-            jumping = true;
-            jumpTimer = 0;
-            clevel->enemy->enemyhit();
-        }else {
-            health -= 1;
-            offsetX = 0;
-            x = 75;
-            y = 720;
-            minusheart = true;
-            fmt::println("{}", health);
+        enemychar.width = 20;
+        enemychar.height = 10;
+        enemychar.left -= 5;
+        if (spritecharForhit.intersects(enemycharForhit) and hit) {
+            hit = false;
+            i->enemyhit();
         }
+        if (spritechar.intersects(enemychar)) {
 
+            if (speedY > 0) {
+                speedY = -1;
+                jumping = true;
+                jumpTimer = 0;
+                i->enemyhit();
+            } else {
+                health -= 1;
+                //x = x - 100;
+                x = speed >= 0 ? x - 100 : x + 100;
+                fmt::println("{}", health);
+            }
+
+        }
     }
 }
 

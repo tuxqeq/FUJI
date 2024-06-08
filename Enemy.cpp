@@ -8,9 +8,19 @@ Enemy::Enemy(std::string name, float speed, float x, float y, int health) : spee
     life = true;
 }
 
-auto Enemy::update(float time) -> void {
-    x = speed * time;
 
+auto Enemy::setText(std::string name) -> void {
+    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Enemies/" + name);
+    sprite.setTexture(texture);
+}
+
+auto Enemy::update(float time) -> void {
+    x += speed * time;
+    road += std::abs(speed) * time;
+    if(road > maxlen) {
+        speed = -speed;
+        road = 0;
+    }
     //collision();
     deadtimer += time * 0.009;
     curFrame += time * 0.009;
@@ -40,9 +50,7 @@ auto Enemy::setOffset(std::pair<float, float> pair) -> void {
     sprite.setPosition(x - pair.first, y-pair.second);
 }
 
-auto Enemy::collision() -> void {
 
-}
 
 auto Enemy::enemyhit() -> void {
     health -= 1;
@@ -53,6 +61,7 @@ auto Enemy::enemyhit() -> void {
         y = 10000;
     }
 }
+
 
 
 

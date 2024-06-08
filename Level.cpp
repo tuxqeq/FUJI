@@ -1,5 +1,6 @@
 #include "Level.h"
 
+
 std::vector<std::vector<std::string>> Level::levels = {
         {
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
@@ -12,12 +13,12 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                                      k  k         w                                                   w",
                 "w                            d                                                      k      k  k                                                      w",
                 "w                                                                                  kkk   kkk  kkk                           w                        w",
-                "w                        b                              b                            k  k         k                           kk                     w",
+                "w                        b                              b        p                   k  k         k                           kk                     w",
                 "w                            b                         bb   bbbbbb   b              kk     r   kk            g              k  k    d               w",
                 "w                          b b                        bbb            bb                    rr                          d     k                       w",
-                "w                  e        bb                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
+                "w                  p         b                       bbbb            bbb                 rrrr           G           g       k   kk                   w",
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
-                "w       bssbqqqqqqqqqqq      b      bb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
+                "w   e   bssbqqqqqqqqqqq  e esbssseesbb             bbbbbbssssssssssssbbbbb       k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
@@ -37,9 +38,20 @@ Level::Level(int num) : num(num){
     texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
-
     curlevel = levels[num];
-    enemy = new Enemy("slime.png", 0, 500, 500, 1);
+    //enemy = new Enemy("slime.png", 0, 500, 500, 1);
+    numOfEnemy = 0;
+    enemies = std::vector<Enemy*> {
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1),
+        new Enemy("slime.png", 0, 10000, 10000, 1)
+    };
 }
 
 
@@ -153,13 +165,35 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 shape.setScale(1.5, 1.5);
             }
             if(curlevel[i][j] == 'e'){
-                if(enemy->life){
+                curlevel[i][j] = ' ';
+                /*if(enemy->life){
                     enemy->setPosition(j * 48, i * 48 - 48);
                     enemy->setOffset(pair);
+                }*/
+                std::random_device rd;
+                int random = rd() % 10;
+                if(enemies[numOfEnemy]->life and random < 9){
+                    enemies[numOfEnemy]->setText("slime.png");
+                    enemies[numOfEnemy]->setPosition(j * 48, i * 48 - 48);
+                    enemies[numOfEnemy]->setOffset(pair);
+                    numOfEnemy++;
                 }
                 //curlevel[i][j] = ' ';
                 //enemy.curlevel = this;
                 //enemies.push_back(enemy);
+            }
+            if(curlevel[i][j] == 'p'){
+                curlevel[i][j] = ' ';
+                std::random_device rd;
+                int random = rd() % 10;
+                if(enemies[numOfEnemy]->life and random < 9){
+                    enemies[numOfEnemy]->health = 3;
+                    enemies[numOfEnemy]->setText("slime_purple.png");
+                    enemies[numOfEnemy]->speed = -0.2;
+                    enemies[numOfEnemy]->setPosition(j * 48, i * 48 - 48);
+                    enemies[numOfEnemy]->setOffset(pair);
+                    numOfEnemy++;
+                }
             }
             if(curlevel[i][j] == 'C') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
@@ -177,9 +211,25 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
             wnd->draw(shape);
         }
     }
+    for (auto i : enemies){
+        i->setOffset(pair);
+    }
+}
 
+auto Level::updateEnemies(float time) -> void {
+    for (auto i : enemies){
+        i->update(time);
+    }
+}
+
+auto Level::drawEnemies(sf::RenderWindow *wnd) -> void {
+    for (auto i : enemies){
+        wnd->draw(i->sprite);
+    }
 }
 
 Level::~Level() {}
+
+
 
 
