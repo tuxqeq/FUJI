@@ -9,6 +9,7 @@ struct Character {
     float hitCooldown = 300, hitTimer = 0;
     float offsetX = 0, offsetY = 0;
     float grdlevel = 960;
+    int coinsCollected = 0;
     bool minusheart = false;
     int health = 5;
     float redtimer = 100;
@@ -37,6 +38,7 @@ struct Character {
     auto getOffsetXY() -> std::pair<float, float>;
     auto drawhealth(sf::RenderWindow* wnd) -> void;
     auto EnemyCollision() -> void;
+    auto CoinCollision() -> void;
 };
 
 

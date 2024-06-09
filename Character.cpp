@@ -36,6 +36,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         collisionX(0);
         EnemyCollision();
     }
+    CoinCollision();
 
     y += speedY*time;
     if(inGame) {
@@ -340,5 +341,25 @@ auto Character::EnemyCollision() -> void {
         }
     }
 }
+auto Character::CoinCollision() -> void {
+    if(inGame){
+        for (auto i: clevel->coins) {
+            auto spritechar = sprite.getGlobalBounds();
+            auto coinchar = i->sprite.getGlobalBounds();
 
+            spritechar.width = 15;
+            spritechar.height = 48;
+            spritechar.left += 10;
+
+            coinchar.width = 20;
+            coinchar.height = 20;
+            coinchar.left -= 5;
+
+            if (spritechar.intersects(coinchar)) {
+                i->collect();
+                coinsCollected += 1;
+            }
+        }
+    }
+}
 

@@ -8,6 +8,8 @@
 struct Game {
     sf::RenderWindow* window;
     sf::Event event;
+    sf::Font font;
+    sf::Text text;
     //Window* window;
     sf::RectangleShape newGamebutton;
     int currentLevel;
@@ -15,13 +17,16 @@ struct Game {
     Background* background;
     Character* character;
     Level* level;
+    int CollectedCoins = 0;
     bool ingame = false;
     bool inmidlev = false;
+    bool inlevFailed = false;
     Button* newGame;
     Button* continueGame;
     Button* nextLevel;
     Button* goToMainMenu;
     Button* restart;
+    Button* restart2;
     Button* intstructions;
 
     Game();
@@ -34,6 +39,7 @@ struct Game {
     auto newLevel(int num) -> void;
     auto mainmenu() -> void;
     auto levelEnd() -> void;
+    auto levelfailed() -> void;
 };
 
 

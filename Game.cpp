@@ -9,12 +9,20 @@ Game::Game() {
     textureNGButton.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Buttons/newgame.png");
     newGamebutton.setTexture(&textureNGButton);
     newGamebutton.setTextureRect(sf::IntRect(0, 0, 771, 161));*/
-    newGame = new Button(150, 225, 120, 30, 720, 180, "newgame.png");
-    continueGame = new Button(320, 225, 120, 30, 720, 180, "continue.png");
+    newGame = new Button(250, 225, 120, 30, 720, 180, "newgame.png");
+    continueGame = new Button(420, 225, 120, 30, 720, 180, "continue.png");
     nextLevel = new Button(130, 200, 120, 30, 720, 180, "nextlevel.png");
     goToMainMenu = new Button(300, 200, 120, 30, 720, 180, "mainmenu.png");
     restart = new Button(1550, 10, 32, 32, 320, 320, "restart.png");
+    restart2 = new Button(200, 200, 32, 32, 320, 320, "restart.png");
     currentLevel = 0;
+    font.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Font/pixel.ttf");
+    text = sf::Text("Coins collected"/* + CollectedCoins*/, font, 14);
+    text.setFillColor(sf::Color::Black);
+    text.setLetterSpacing(0.02);
+    text.setOutlineThickness(0.3);
+    text.setOutlineColor(sf::Color(255, 32, 161, 255));
+    text.setPosition(window->getSize().x - 170, 40);
 }
 
 Game::~Game(){
@@ -47,18 +55,19 @@ auto Game::pollEvents() {
                     }
                 }*/
                 if(restart->isPressed(window)){
-                    restartLevel();
+                    newLevel(currentLevel);
+                }
+                if(restart2->isPressed(window)){
+                    newLevel(currentLevel);
+                }
+                if(goToMainMenu->isPressed(window)){
+                    mainmenu();
+                }
+                if(nextLevel->isPressed(window)){
+                    currentLevel += 1;
+                    newLevel(currentLevel);
                 }
 
-                if(inmidlev){
-                    if(goToMainMenu->isPressed(window)){
-                        mainmenu();
-                    }
-                    if(nextLevel->isPressed(window)){
-                        currentLevel += 1;
-                        newLevel(currentLevel);
-                    }
-                }
 
                 if(newGame->isPressed(window)){
                     //fmt::print("new button");
@@ -73,10 +82,11 @@ auto Game::pollEvents() {
                         character->inGame = true;
 
                     }*/
-                    newLevel(currentLevel);
+                    newLevel(0);
+                    currentLevel= 0;
                 }
                 if(continueGame->isPressed(window)){
-                    fmt::print("continue");
+                    newLevel(currentLevel);
                 }
             }
             case sf::Event::KeyPressed: {
@@ -96,19 +106,33 @@ auto Game::pollEvents() {
 }
 
 auto Game::update(float time) -> void{
+    //CollectedCoins = ;
+    if(ingame) {
+        std::string textforDispl = fmt::format("Coins collected: {}", character->coinsCollected);
+        text.setString(textforDispl);
+    }if(not ingame){
+        std::string textforDispl = fmt::format("Coins collected: {}", CollectedCoins);
+        text.setString(textforDispl);
+    }
     pollEvents();
     background->setSize(window->getSize());
     if(character->minusheart) restartLevel();
-    if(character->end) levelEnd();
-    if(character->health == 0) mainmenu();
+    if(character->end) {
+        levelEnd();
+        currentLevel += 1;
+    }
+    if(character->health == 0) levelfailed();
     else character->update(time, window->getSize(), this->window);
-    if(ingame) character->clevel->updateEnemies(time);
+    if(ingame) {
+        character->clevel->updateEnemies(time);
+        character->clevel->updateCoins(time);
+    }
 }
 
 auto Game::render() -> void{
-    window->clear(sf::Color(255, 0, 0, 255));
+    window->clear();
     window->draw(background->getBackground());
-    if(not ingame and not inmidlev) {
+    if(not ingame and not inmidlev and not inlevFailed) {
         window->draw(newGame->shape);
         window->draw(continueGame->shape);
     }
@@ -116,19 +140,28 @@ auto Game::render() -> void{
         window->draw(nextLevel->shape);
         window->draw(goToMainMenu->shape);
     }
+    else if(inlevFailed){
+        window->draw(restart2->shape);
+        window->draw(goToMainMenu->shape);
+    }
     else if(ingame) {
         level->draw(this->window, this->character->getOffsetXY());
         character->drawhealth(this->window);
         character->clevel->drawEnemies(window);
+        character->clevel->drawCoins(window);
         window->draw(restart->shape);
     }
     window->draw(character->sprite);
+    text.setPosition(window->getSize().x - 170, 50);
+    window->draw(text);
     window->display();
 }
 
 auto Game::mainmenu() -> void {
+    //CollectedCoins += character->coinsCollected;
     background = new Background("fudzimenu.png");
     inmidlev =  false;
+    inlevFailed =  false;
     ingame = false;
     window->close();
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game",
@@ -147,6 +180,7 @@ auto Game::restartLevel() -> void {
 
 
 auto Game::levelEnd() -> void {
+    CollectedCoins += character->coinsCollected;
     background = new Background("midlev.png");
     ingame = false;
     inmidlev = true;
@@ -161,8 +195,8 @@ auto Game::levelEnd() -> void {
 }
 
 auto Game::newLevel(int num) -> void {
-    if(not ingame or inmidlev) {
         inmidlev = false;
+        inlevFailed = false;
         ingame = true;
         window->close();
         level = new Level(num);
@@ -172,6 +206,17 @@ auto Game::newLevel(int num) -> void {
         character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
         character->inGame = true;
         character->clevel = level;
-    }
+}
 
+auto Game::levelfailed() -> void {
+    background = new Background("levfailed.png");
+    ingame = false;
+    inlevFailed = true;
+    character->inGame = false;
+    //character->saveScore();
+    character->health += 1;
+    window->close();
+    window = new sf::RenderWindow(sf::VideoMode(600, 400), "game",
+                                  sf::Style::Titlebar | sf::Style::Close);
+    character->setPosition(10000, 10000);
 }

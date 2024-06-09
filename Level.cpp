@@ -16,9 +16,9 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                        b                              b        p              E     k  k         k                           kk                     w",
                 "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
                 "w                          b b                        bbb            bb         E           rr                          d     k                       w",
-                "w                  p         b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
+                "w             c    p     c   b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
-                "w   e   bssbqqqqqqqqqqq  e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
+                "w   e c bssbqqqqqqqqqqqc e esbssseesbbc      c     bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
@@ -60,6 +60,7 @@ Level::Level(int num) : num(num){
     curlevel = levels[num];
     //enemy = new Enemy("slime.png", 0, 500, 500, 1);
     numOfEnemy = 0;
+    numOfCoin = 0;
     enemies = std::vector<Enemy*> {
         new Enemy("slime.png", 0, 10000, 10000, 1),
         new Enemy("slime.png", 0, 10000, 10000, 1),
@@ -71,6 +72,33 @@ Level::Level(int num) : num(num){
         new Enemy("slime.png", 0, 10000, 10000, 1),
         new Enemy("slime.png", 0, 10000, 10000, 1)
     };
+    coins = std::vector<Collectables*> {
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
+    };
+    coinsInCave = coins.size() - 1;
 }
 
 
@@ -170,6 +198,14 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 curlevel[i][j] = ' ';
             }
             if(curlevel[i][j] == 'q') {
+                std::random_device rd2;
+                int random2 = rd2() % 20;
+                if(not coins[coinsInCave]->collected and random2 < 4 and coinsInCave > 15){
+                    fmt::println("{}", coinsInCave);
+                    coins[coinsInCave]->setPosition(j * 48, i * 48 - 32);
+                    coins[coinsInCave]->setOffset(pair);
+                    coinsInCave--;
+                }
                 if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] == 'q')
                     shape.setTextureRect(sf::IntRect(224, 113, 32, 15));
                 if (curlevel[i][j - 1] == 'q' and curlevel[i][j + 1] == 'q')
@@ -201,6 +237,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 //enemy.curlevel = this;
                 //enemies.push_back(enemy);
             }
+
             if(curlevel[i][j] == 'p'){
                 curlevel[i][j] = ' ';
                 std::random_device rd;
@@ -212,6 +249,16 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     enemies[numOfEnemy]->setPosition(j * 48, i * 48 - 48);
                     enemies[numOfEnemy]->setOffset(pair);
                     numOfEnemy++;
+                }
+            }
+            if(curlevel[i][j] == 'c'){
+                curlevel[i][j] = ' ';
+                std::random_device rd;
+                int random = rd() % 10;
+                if(not coins[numOfCoin]->collected and random < 8){
+                    coins[numOfCoin]->setPosition(j * 48, i * 48 - 32);
+                    coins[numOfCoin]->setOffset(pair);
+                    numOfCoin++;
                 }
             }
             if(curlevel[i][j] == 'C') {
@@ -233,10 +280,19 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
     for (auto i : enemies){
         i->setOffset(pair);
     }
+    for (auto i : coins){
+        i->setOffset(pair);
+    }
 }
 
 auto Level::updateEnemies(float time) -> void {
     for (auto i : enemies){
+        i->update(time);
+    }
+}
+
+auto Level::updateCoins(float time) -> void {
+    for (auto i : coins){
         i->update(time);
     }
 }
@@ -247,9 +303,18 @@ auto Level::drawEnemies(sf::RenderWindow *wnd) -> void {
     }
 }
 
+auto Level::drawCoins(sf::RenderWindow *wnd) -> void {
+    for (auto i : coins){
+        wnd->draw(i->sprite);
+    }
+}
+
 Level::~Level() {
     for (auto i : enemies){
         delete i;
+    }
+    for (auto j : coins){
+        delete j;
     }
 }
 
