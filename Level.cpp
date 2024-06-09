@@ -20,6 +20,25 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
                 "w   e   bssbqqqqqqqqqqq  e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        },
+        {
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                     w               kk                                                                w",
+                "w                            d                                                      k  k         w                                                   w",
+                "w                        E   d                                                      k      k  k                                                      w",
+                "w                                                                               E   kkk   kkk  kkk                           w                        w",
+                "w                        b                              b        p              E     k  k         k                           kk                     w",
+                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
+                "w          e               b b                        bbb            bb         E           rr                          d     k                       w",
+                "w          b       p         b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
+                "w          b             b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
+                "w   e     bbb            e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
+                "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
 

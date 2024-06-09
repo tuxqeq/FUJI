@@ -10,6 +10,7 @@ struct Game {
     sf::Event event;
     //Window* window;
     sf::RectangleShape newGamebutton;
+    int currentLevel;
     sf::Texture textureNGButton;
     Background* background;
     Character* character;
@@ -20,6 +21,7 @@ struct Game {
     Button* continueGame;
     Button* nextLevel;
     Button* goToMainMenu;
+    Button* restart;
     Button* intstructions;
 
     Game();

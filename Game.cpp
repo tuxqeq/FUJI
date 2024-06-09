@@ -13,6 +13,8 @@ Game::Game() {
     continueGame = new Button(320, 225, 120, 30, 720, 180, "continue.png");
     nextLevel = new Button(130, 200, 120, 30, 720, 180, "nextlevel.png");
     goToMainMenu = new Button(300, 200, 120, 30, 720, 180, "mainmenu.png");
+    restart = new Button(1550, 10, 32, 32, 320, 320, "restart.png");
+    currentLevel = 0;
 }
 
 Game::~Game(){
@@ -44,12 +46,17 @@ auto Game::pollEvents() {
 
                     }
                 }*/
+                if(restart->isPressed(window)){
+                    restartLevel();
+                }
+
                 if(inmidlev){
                     if(goToMainMenu->isPressed(window)){
                         mainmenu();
                     }
                     if(nextLevel->isPressed(window)){
-                        newLevel(1);
+                        currentLevel += 1;
+                        newLevel(currentLevel);
                     }
                 }
 
@@ -66,7 +73,7 @@ auto Game::pollEvents() {
                         character->inGame = true;
 
                     }*/
-                    newLevel(0);
+                    newLevel(currentLevel);
                 }
                 if(continueGame->isPressed(window)){
                     fmt::print("continue");
@@ -113,6 +120,7 @@ auto Game::render() -> void{
         level->draw(this->window, this->character->getOffsetXY());
         character->drawhealth(this->window);
         character->clevel->drawEnemies(window);
+        window->draw(restart->shape);
     }
     window->draw(character->sprite);
     window->display();
@@ -131,6 +139,7 @@ auto Game::mainmenu() -> void {
 
 auto Game::restartLevel() -> void {
     character->setPosition(75, window->getSize().y - 96);
+    character->offsetX = 0;
     character->inGame = true;
     character->minusheart = false;
 }
@@ -159,10 +168,10 @@ auto Game::newLevel(int num) -> void {
         level = new Level(num);
         window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
                                       sf::Style::Titlebar | sf::Style::Close);
-        character->setPosition(75, window->getSize().y - 96);
-        character->clevel = level;
+        delete character;
+        character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
         character->inGame = true;
-
+        character->clevel = level;
     }
 
 }

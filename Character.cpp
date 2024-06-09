@@ -20,7 +20,7 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
 }
 
 auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
-    if(not inGame) sprite.setScale(0.75, 0.75);
+    sprite.setScale(0.75, 0.75);
     //else sprite.setScale(1, 1);
     redtimer += time;
     if(redtimer < 100) {
