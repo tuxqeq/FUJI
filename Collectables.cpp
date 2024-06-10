@@ -1,5 +1,7 @@
 #include "Collectables.h"
-
+//TODO make heal
+//TODO make speedup
+//TODO make damage up
 Collectables::Collectables() {
     std::random_device rd;
     int random = rd() % 4;
@@ -9,21 +11,25 @@ Collectables::Collectables() {
             name = "coin.png";
             frames = 12;
             fmt::println("coin");
+            break;
         }
         case 1: {
             name = "coin1.png";
             frames = 9;
             fmt::println("coin1");
+            break;
         }
         case 2: {
             name = "coin2.png";
             frames = 12;
             fmt::println("coin2");
+            break;
         }
         case 3: {
             name = "coin3.png";
             frames = 12;
             fmt::println("coin3");
+            break;
         }
     }
     collected = false;

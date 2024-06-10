@@ -1,5 +1,6 @@
 #pragma once
 #include <sfml/Graphics.hpp>
+#include <fmt/ranges.h>
 //#include "Level.h"
 
 struct Enemy {

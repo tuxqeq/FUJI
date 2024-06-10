@@ -28,10 +28,14 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     }else{
         sprite.setColor(sf::Color::White);
     }
-    x += speed*time;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping){
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping and hitTimer > hitCooldown){
         hit = true;
+        hitAnim = true;
+        hitTimer = 0;
     }
+    x += speed*time;
+
     if(inGame) {
         collisionX(0);
         EnemyCollision();
@@ -107,12 +111,12 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
             if (frame > 6) frame -= 6;
             sprite.setTextureRect(sf::IntRect(96 * int(frame) + 96, 192, -96, 96));
         }
-        if(isOnGround and hit and hitTimer > hitCooldown){
+        if(isOnGround and hitAnim){
             speed = 0;
             hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
-                hit = false;
+                hitAnim = false;
                 hitTimer = 0;
             }
             sprite.setTextureRect(sf::IntRect(96 * int(hitframe)+96, 576, -96, 96));
@@ -130,12 +134,12 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
             if (frame > 6) frame -= 6;
             sprite.setTextureRect(sf::IntRect(96 * int(frame), 192, 96, 96));
         }
-        if(isOnGround and hit and hitTimer > hitCooldown){
+        if(isOnGround and hitAnim){
             speed = 0;
             hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
-                hit = false;
+                hitAnim = false;
                 hitTimer = 0;
             }
             sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
@@ -149,12 +153,12 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         if(frame > 6) frame -= 6;
         if(dir == 1) sprite.setTextureRect(sf::IntRect(96*int(frame) + 96, 0, -96, 96));
         else sprite.setTextureRect(sf::IntRect(96*int(frame), 0, 96, 96));
-        if(hit and hitTimer > hitCooldown){
+        if(hitAnim){
             speed = 0;
             hitframe += 0.02f * time;
             if (hitframe > 4) {
                 hitframe -= 4;
-                hit = false;
+                hitAnim = false;
                 hitTimer = 0;
             }
             if(dir == 0) sprite.setTextureRect(sf::IntRect(96 * int(hitframe), 576, 96, 96));
@@ -201,7 +205,6 @@ auto Character::uncrawlingAnim(float time, int dir) -> void {
 
 auto Character::collisionX(int num) -> void {
     if(clevel->curlevel[(y)/48][(x+24)/48] == 'q'){
-        //crawling = true;
         inCave = true;
     }
     if(clevel->curlevel[(y)/48][(x+24)/48] != 'q'){
@@ -240,8 +243,6 @@ auto Character::collisionX(int num) -> void {
                     jumping = false;
                     y = i*48 - 48;
                     fmt::print("{}\n", y);
-
-                    //jumpH = 0;
                 }
                 if (speedY < 0 and num == 1) {
                     y = i * 48 + 48;
@@ -319,11 +320,11 @@ auto Character::EnemyCollision() -> void {
         enemychar.height = 10;
         enemychar.left -= 5;
         if (spritecharForhit.intersects(enemycharForhit) and hit) {
+            hitTimer = 0;
             hit = false;
             i->enemyhit();
         }
-        if (spritechar.intersects(enemychar)) {
-
+        else if (spritechar.intersects(enemychar)) {
             if (speedY > 0) {
                 speedY = -1;
                 jumping = true;
@@ -331,9 +332,8 @@ auto Character::EnemyCollision() -> void {
                 i->enemyhit();
             } else {
                 health -= 1;
-                //x = x - 100;
                 redtimer = 0;
-                x = speed >= 0 ? x - 100 : x + 100;
+                x = speed >= 0 ? x - 50 : x + 50;
                 sprite.setColor(sf::Color(255, 0, 0, 127));
                 fmt::println("{}", health);
             }

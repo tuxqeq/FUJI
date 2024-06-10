@@ -31,13 +31,13 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                     w               kk                                                                w",
                 "w                            d                                                      k  k         w                                                   w",
                 "w                        E   d                                                      k      k  k                                                      w",
-                "w                                                                               E   kkk   kkk  kkk                           w                        w",
-                "w                        b                              b        p              E     k  k         k                           kk                     w",
+                "w                                                                               E   kkk   kkk  kkk                           w                       w",
+                "w                        b                              b        p              E     k  k         k                           kk                    w",
                 "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
-                "w          e               b b                        bbb            bb         E           rr                          d     k                       w",
-                "w          b       p         b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
-                "w          b             b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
-                "w   e     bbb            e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
+                "w          e               b b                        bbb            bb         E           rr                          d     k                      w",
+                "w          b  b              b                       bbbb            bbb        E         rrrr           G           g       k   kk                  w",
+                "w          bc b c        b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
+                "w   e    sbbbbbbbss    p e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00            w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
@@ -62,16 +62,17 @@ Level::Level(int num) : num(num){
     numOfEnemy = 0;
     numOfCoin = 0;
     enemies = std::vector<Enemy*> {
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1),
-        new Enemy("slime.png", 0, 10000, 10000, 1)
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2)
     };
+
     coins = std::vector<Collectables*> {
         new Collectables(),
         new Collectables(),
@@ -221,10 +222,6 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
             }
             if(curlevel[i][j] == 'e'){
                 curlevel[i][j] = ' ';
-                /*if(enemy->life){
-                    enemy->setPosition(j * 48, i * 48 - 48);
-                    enemy->setOffset(pair);
-                }*/
                 std::random_device rd;
                 int random = rd() % 10;
                 if(enemies[numOfEnemy]->life and random < 9){
@@ -233,9 +230,6 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     enemies[numOfEnemy]->setOffset(pair);
                     numOfEnemy++;
                 }
-                //curlevel[i][j] = ' ';
-                //enemy.curlevel = this;
-                //enemies.push_back(enemy);
             }
 
             if(curlevel[i][j] == 'p'){

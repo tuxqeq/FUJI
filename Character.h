@@ -25,6 +25,7 @@ struct Character {
     sf::Texture heart;
     bool jumping = false;
     bool hit = false;
+    bool hitAnim = false;
     bool crawling = false;
     bool isOnGround = false;
     bool inCave = false;

@@ -54,6 +54,7 @@ auto Enemy::setOffset(std::pair<float, float> pair) -> void {
 
 auto Enemy::enemyhit() -> void {
     health -= 1;
+    fmt::println("{}", health);
     if(health == 0){
         life = false;
         deadtimer = 0;
