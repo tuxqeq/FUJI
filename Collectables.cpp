@@ -36,7 +36,7 @@ Collectables::Collectables() {
     texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/" + name);
     sprite.setPosition(10000,10000*random);
     sprite.setTexture(texture);
-    sprite.setScale(2, 2);
+    sprite.setScale(1.5, 1.5);
     x = 10000;
     y = 10000;
 }

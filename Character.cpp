@@ -250,7 +250,7 @@ auto Character::collisionX(int num) -> void {
                 if(speed > 0 and num == 0) {
                     if(hit){
                         if(clevel->curlevel[i-1][j] == 'b'){
-                            clevel->curlevel[i][j] = 'q';
+                            clevel->curlevel[i][j] = 'Q';
                             hit = false;
                         }if(clevel->curlevel[i-1][j] == ' '){
                             clevel->curlevel[i][j] = ' ';

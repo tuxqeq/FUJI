@@ -64,7 +64,6 @@ auto Game::pollEvents() {
                     mainmenu();
                 }
                 if(nextLevel->isPressed(window)){
-                    currentLevel += 1;
                     newLevel(currentLevel);
                 }
 

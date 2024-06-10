@@ -12,13 +12,13 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                     w               kk                                                                w",
                 "w                            d                                                      k  k         w                                                   w",
                 "w                        E   d                                                      k      k  k                                                      w",
-                "w                                                                               E   kkk   kkk  kkk                           w                        w",
-                "w                        b                              b        p              E     k  k         k                           kk                     w",
+                "w                                                                               E   kkk   kkk  kkk                           w                       w",
+                "w                        b                              b        p              E     k  k         k                           kk                    w",
                 "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
-                "w                          b b                        bbb            bb         E           rr                          d     k                       w",
-                "w             c    p     c   b                       bbbb            bbb        E         rrrr           G           g       k   kk                   w",
+                "w                          b b                        bbb            bb         E           rr                          d     k                      w",
+                "w             c    p     c   b                       bbbb            bbb        E         rrrr           G           g       k   kk                  w",
                 "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
-                "w   e c bssbqqqqqqqqqqqc e esbssseesbbc      c     bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00             w",
+                "w   e c bssbqqQQQqqQQQqc e esbssseesbbc      c     bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00            w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
@@ -38,6 +38,25 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w          b  b              b                       bbbb            bbb        E         rrrr           G           g       k   kk                  w",
                 "w          bc b c        b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
                 "w   e    sbbbbbbbss    p e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00            w",
+                "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        },
+        {
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                     w               kk                                                                w",
+                "w                            d                                                      k  k         w                                                   w",
+                "w                        E   d                                                      k      k  k                                                      w",
+                "w                                                                               E   kkk   kkk  kkk                           w                       w",
+                "w                        b                              b                       E     k  k         k                           kk                    w",
+                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
+                "w          e               b b                        bbb            bb         E           rr                          d     k                      w",
+                "w          b  b              b                       bbbb            bbb                  rrrr           G           g       k   kk                  w",
+                "w          bc b c        b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
+                "w                                                  bbbbbbssssssssssssbbbbb        k k     rrrrrr      d              g   kk       k    00            w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
@@ -199,9 +218,20 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 curlevel[i][j] = ' ';
             }
             if(curlevel[i][j] == 'q') {
+                if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] == 'q')
+                    shape.setTextureRect(sf::IntRect(224, 113, 32, 15));
+                if (curlevel[i][j - 1] == 'q' and curlevel[i][j + 1] == 'q')
+                    shape.setTextureRect(sf::IntRect(256, 113, 32, 15));
+                if (curlevel[i][j - 1] == 'q' and curlevel[i][j + 1] != 'q')
+                    shape.setTextureRect(sf::IntRect(288, 113, 32, 15));
+                if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] != 'q')
+                    shape.setTextureRect(sf::IntRect(320, 113, 32, 15));
+            }
+            if(curlevel[i][j] == 'Q') {
+                curlevel[i][j] = 'q';
                 std::random_device rd2;
                 int random2 = rd2() % 20;
-                if(not coins[coinsInCave]->collected and random2 < 4 and coinsInCave > 15){
+                if(not coins[coinsInCave]->collected and random2 < 12 and coinsInCave > 15){
                     fmt::println("{}", coinsInCave);
                     coins[coinsInCave]->setPosition(j * 48, i * 48 - 32);
                     coins[coinsInCave]->setOffset(pair);
