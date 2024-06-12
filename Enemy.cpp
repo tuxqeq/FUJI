@@ -26,11 +26,13 @@ auto Enemy::update(float time) -> void {
     curFrame += time * 0.009;
     if (curFrame > 4) curFrame-= 4;
     sprite.setTextureRect(sf::IntRect(24*int(curFrame), 0, 24, 24));
-    if (not life) {
-        sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
+    if (hit) {
+        //sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
         deadtimer = 0;
+        hit = false;
     }
-    if(deadtimer < 4){
+    if(deadtimer < 2){
+        x-=speed*time;
         sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
     }
 }
@@ -53,6 +55,7 @@ auto Enemy::setOffset(std::pair<float, float> pair) -> void {
 
 
 auto Enemy::enemyhit() -> void {
+    hit = true;
     health -= 1;
     fmt::println("{}", health);
     if(health == 0){

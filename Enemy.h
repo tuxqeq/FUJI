@@ -6,11 +6,12 @@
 struct Enemy {
     float x, y, speed = 0;
     float curFrame;
-    float deadtimer = 4;
+    float deadtimer = 2;
     sf::Sprite sprite;
     sf::Texture texture;
     int health = 0;
     bool life;
+    bool hit;
     float road = 0;
     int maxlen = 200;
     Enemy(std::string name, float speed, float x, float y, int health);
