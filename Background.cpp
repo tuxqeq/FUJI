@@ -3,7 +3,7 @@
 Background::Background(std::string name)
     : name(name){
 
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Backgrounds/" + name);
+    texture.loadFromFile("../assets/Backgrounds/" + name);
     textsize = texture.getSize();
     background.setTexture(texture);
 

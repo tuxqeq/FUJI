@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(std::string name, float speed, float x, float y, int health) : speed(speed), x(x), y(y), health(health){
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Enemies/" + name);
+    texture.loadFromFile("../assets/Enemies/" + name);
     sprite.setTexture(texture);
     sprite.setPosition(x, y);
     sprite.setScale(2, 2);
@@ -10,7 +10,7 @@ Enemy::Enemy(std::string name, float speed, float x, float y, int health) : spee
 
 
 auto Enemy::setText(std::string name) -> void {
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Enemies/" + name);
+    texture.loadFromFile("../assets/Enemies/" + name);
     sprite.setTexture(texture);
 }
 

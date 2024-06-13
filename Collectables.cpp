@@ -33,7 +33,7 @@ Collectables::Collectables() {
         }
     }
     collected = false;
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/" + name);
+    texture.loadFromFile("../assets/Level/" + name);
     sprite.setPosition(10000,10000*random);
     sprite.setTexture(texture);
     sprite.setScale(1.5, 1.5);

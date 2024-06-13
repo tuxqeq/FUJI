@@ -73,9 +73,9 @@ The "G" represents the goal or endpoint.*/
 Level::Level(int num) : num(num){
     //shape = sf::RectangleShape(sf::Vector2f(48, 48));
     background = new Background("level1.png");
-    texture.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/nicefloor.png");
+    texture.loadFromFile("../assets/Level/nicefloor.png");
     shape.setTexture(texture);
-    spike.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Level/spike.png");
+    spike.loadFromFile("../assets/Level/spike.png");
     curlevel = levels[num];
     //enemy = new Enemy("slime.png", 0, 500, 500, 1);
     numOfEnemy = 0;

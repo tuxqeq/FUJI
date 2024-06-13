@@ -16,7 +16,7 @@ Game::Game() {
     restart = new Button(1550, 10, 32, 32, 320, 320, "restart.png");
     restart2 = new Button(200, 200, 32, 32, 320, 320, "restart.png");
     currentLevel = 0;
-    font.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Font/pixel.ttf");
+    font.loadFromFile("../assets/Font/pixel.ttf");
     text = sf::Text("Coins collected"/* + CollectedCoins*/, font, 14);
     text.setFillColor(sf::Color::Black);
     text.setLetterSpacing(0.02);

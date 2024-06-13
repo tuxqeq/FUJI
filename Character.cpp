@@ -4,14 +4,14 @@
 //TODO create animation class and handle animations there
 Character::Character(float x, float y, float w, float h, std::string name, bool inGame)
         : x(x), y(y), w(w), h(h), name(name), inGame(inGame){
-    image.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Character/" + name);
+    image.loadFromFile("../assets/Character/" + name);
     texture.loadFromImage(image);
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, w, h));
     sprite.setPosition(x, y);
     jumpH = 0;
     grdlevel = y;
-    heart.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Character/humanheart.png");
+    heart.loadFromFile("../assets/Character/humanheart.png");
     hearts = std::vector<sf::Sprite>(5, sf::Sprite(heart));
     for (int i = 0; i < 5; i++){
         hearts[i].setTextureRect(sf::IntRect(0, 0, 64, 64));
