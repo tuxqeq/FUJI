@@ -33,6 +33,7 @@ auto Enemy::update(float time) -> void {
     }
     if(deadtimer < 2){
         x-=speed*time;
+        road -= std::abs(speed) * time;
         sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
     }
 }
