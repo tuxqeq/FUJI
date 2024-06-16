@@ -23,6 +23,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     sprite.setScale(0.75, 0.75);
     //else sprite.setScale(1, 1);
     redtimer += time;
+    speedupTimer += time;
     if(redtimer < 100) {
         sprite.setColor(sf::Color(255, 0, 0, 127));
     }else{
@@ -33,6 +34,13 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
         hit = true;
         hitAnim = true;
         hitTimer = 0;
+    }
+    if(speedupTimer > 2000) speedUp = false;
+    if(speedUp) {
+        sprite.setColor(sf::Color(255, 0, 135, 127));
+        speed*=1.5;
+    }else{
+        sprite.setColor(sf::Color::White);
     }
     x += speed*time;
 
@@ -356,6 +364,21 @@ auto Character::CoinCollision() -> void {
             coinchar.left -= 5;
 
             if (spritechar.intersects(coinchar)) {
+                if(i->hit) {
+                    health -= 1;
+                    redtimer = 0;
+                    //fmt::println("hit");
+                }
+                else if(i->heal){
+                    if (health < 5) health += 1;
+                    //fmt::println("heal");
+                }
+                else if(i->speed) {
+                    speedUp = true;
+                    speedupTimer = 0;
+                    //fmt::println("speed Up");
+                }
+
                 i->collect();
                 coinsCollected += 1;
             }

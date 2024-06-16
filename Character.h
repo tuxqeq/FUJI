@@ -13,6 +13,7 @@ struct Character {
     bool minusheart = false;
     int health = 5;
     float redtimer = 100;
+    float speedupTimer = 2000;
     bool inGame;
     int dir=0;
     bool end = false;
@@ -29,6 +30,7 @@ struct Character {
     bool crawling = false;
     bool isOnGround = false;
     bool inCave = false;
+    bool speedUp = false;
     float frame, hitframe, crawlFrame = 0;
     Character(float x, float y, float w, float h, std::string name, bool inGame);
     auto crawlingAnim(float time, int dir, bool isOnGround) -> void;

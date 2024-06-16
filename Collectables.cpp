@@ -5,6 +5,7 @@
 Collectables::Collectables() {
     std::random_device rd;
     int random = rd() % 4;
+    int random2 = rd() % 3;
 
     switch (random) {
         case 0: {
@@ -31,6 +32,19 @@ Collectables::Collectables() {
             fmt::println("coin3");
             break;
         }
+    }
+    switch (random2) {
+        case 0:
+            heal = true;
+            break;
+        case 1:
+            hit = true;
+            break;
+        case 2:
+            speed = true;
+            break;
+        default:
+            break;
     }
     collected = false;
     texture.loadFromFile("../assets/Level/" + name);

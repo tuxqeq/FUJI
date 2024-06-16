@@ -4,25 +4,31 @@ Game::Game() {
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "game", sf::Style::Titlebar | sf::Style::Close);
     character = new Character(75, window->getSize().y - 150, 96, 96, "ninja.png", false);
     background = new Background("fudzimenu.png");
-    /*newGamebutton = sf::RectangleShape(sf::Vector2f(120, 30));
-    newGamebutton.setPosition(150, 225);
-    textureNGButton.loadFromFile("/Users/tuxqeq/Documents/CLion/Project.cpp/assets/Buttons/newgame.png");
-    newGamebutton.setTexture(&textureNGButton);
-    newGamebutton.setTextureRect(sf::IntRect(0, 0, 771, 161));*/
+
     newGame = new Button(250, 225, 120, 30, 720, 180, "newgame.png");
     continueGame = new Button(420, 225, 120, 30, 720, 180, "continue.png");
     nextLevel = new Button(130, 200, 120, 30, 720, 180, "nextlevel.png");
     goToMainMenu = new Button(300, 200, 120, 30, 720, 180, "mainmenu.png");
     restart = new Button(1550, 10, 32, 32, 320, 320, "restart.png");
     restart2 = new Button(200, 200, 32, 32, 320, 320, "restart.png");
+
     currentLevel = 0;
+    readsave();
+
     font.loadFromFile("../assets/Font/pixel.ttf");
-    text = sf::Text("Coins collected"/* + CollectedCoins*/, font, 14);
+    text = sf::Text("Coins collected", font, 14);
     text.setFillColor(sf::Color::Black);
     text.setLetterSpacing(0.02);
     text.setOutlineThickness(0.3);
     text.setOutlineColor(sf::Color(255, 32, 161, 255));
     text.setPosition(window->getSize().x - 170, 40);
+
+    whatlevel = sf::Text("you are on level:", font, 14);
+    whatlevel.setFillColor(sf::Color::White);
+    whatlevel.setLetterSpacing(0.02);
+    whatlevel.setOutlineThickness(0.3);
+    whatlevel.setOutlineColor(sf::Color(255, 32, 161, 255));
+    whatlevel.setPosition(410, 270);
 }
 
 Game::~Game(){
@@ -37,23 +43,10 @@ auto Game::pollEvents() {
     while (window->pollEvent(event)){
         switch (event.type) {
             case sf::Event::Closed:
+                writeData();
                 window->close();
                 break;
             case sf::Event::MouseButtonPressed:{
-                /*if (newGamebutton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)))) {
-                    newGamebutton.setFillColor(sf::Color::White);
-                    if(not ingame) {
-                        ingame = true;
-                        window->close();
-                        level = new Level(0);
-                        window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
-                                                      sf::Style::Titlebar | sf::Style::Close);
-                        character->setPosition(75, window->getSize().y - 96);
-                        character->clevel = level;
-                        character->inGame = true;
-
-                    }
-                }*/
                 if(restart->isPressed(window)){
                     newLevel(currentLevel);
                 }
@@ -69,18 +62,6 @@ auto Game::pollEvents() {
 
 
                 if(newGame->isPressed(window)){
-                    //fmt::print("new button");
-                    /*if(not ingame) {
-                        ingame = true;
-                        window->close();
-                        level = new Level(0);
-                        window = new sf::RenderWindow(sf::VideoMode(1600, 768), "GameStarted",
-                                                      sf::Style::Titlebar | sf::Style::Close);
-                        character->setPosition(75, window->getSize().y - 96);
-                        character->clevel = level;
-                        character->inGame = true;
-
-                    }*/
                     newLevel(0);
                     currentLevel= 0;
                 }
@@ -105,13 +86,16 @@ auto Game::pollEvents() {
 }
 
 auto Game::update(float time) -> void{
-    //CollectedCoins = ;
     if(ingame) {
         std::string textforDispl = fmt::format("Coins collected: {}", character->coinsCollected);
         text.setString(textforDispl);
     }if(not ingame){
         std::string textforDispl = fmt::format("Coins collected: {}", CollectedCoins);
         text.setString(textforDispl);
+    }
+    if(not ingame and not inmidlev and not inlevFailed){
+        std::string levelnum = fmt::format("You are on level: {} ", currentLevel+1);
+        whatlevel.setString(levelnum);
     }
     pollEvents();
     background->setSize(window->getSize());
@@ -134,6 +118,7 @@ auto Game::render() -> void{
     if(not ingame and not inmidlev and not inlevFailed) {
         window->draw(newGame->shape);
         window->draw(continueGame->shape);
+        window->draw(whatlevel);
     }
     else if(inmidlev){
         window->draw(nextLevel->shape);
@@ -153,11 +138,11 @@ auto Game::render() -> void{
     window->draw(character->sprite);
     text.setPosition(window->getSize().x - 170, 50);
     window->draw(text);
+
     window->display();
 }
 
 auto Game::mainmenu() -> void {
-    //CollectedCoins += character->coinsCollected;
     background = new Background("fudzimenu.png");
     inmidlev =  false;
     inlevFailed =  false;
@@ -174,6 +159,7 @@ auto Game::restartLevel() -> void {
     character->offsetX = 0;
     character->inGame = true;
     character->minusheart = false;
+    character->speedupTimer = 2000;
 }
 
 
@@ -184,7 +170,6 @@ auto Game::levelEnd() -> void {
     ingame = false;
     inmidlev = true;
     character->inGame = false;
-    //character->saveScore();
     character->end = false;
     window->close();
     window = new sf::RenderWindow(sf::VideoMode(600, 400), "game",
@@ -218,4 +203,36 @@ auto Game::levelfailed() -> void {
     window = new sf::RenderWindow(sf::VideoMode(600, 400), "game",
                                   sf::Style::Titlebar | sf::Style::Close);
     character->setPosition(10000, 10000);
+}
+
+auto Game::readsave() -> void {
+    std::string filePath = "../saving/save.txt";
+    std::ifstream infile(filePath);
+    if (infile.good()) {
+        int intValue1, intValue2;
+
+        infile >> currentLevel;
+        infile >> CollectedCoins;
+
+        infile.close();
+    }else {
+        std::ofstream outfile(filePath);
+        if (outfile.is_open()) {
+            currentLevel = 0;
+            CollectedCoins = 0;
+            outfile << currentLevel << "\n" << CollectedCoins << "\n";
+            outfile.close();
+        }
+    }
+}
+
+auto Game::writeData() -> void {
+    std::string filePath = "../saving/save.txt";
+    std::ofstream outfile(filePath);
+    if (outfile.is_open()) {
+        outfile << currentLevel << "\n" << CollectedCoins << "\n";
+        outfile.close();
+    } else {
+        std::cerr << "Error opening the file '" << filePath << "' for writing.\n";
+    }
 }

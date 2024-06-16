@@ -12,12 +12,11 @@ struct Level {
     sf::Sprite shape;
     sf::Texture texture;
     sf::Texture spike;
-    //Enemy* enemy;
+    sf::Texture cloud;
     std::vector<Enemy*> enemies;
     std::vector<Collectables*> coins;
     int num;
     Level(int num);
-    //std::vector<Enemy> enemies;
     int numOfEnemy = 0;
     int numOfCoin = 0;
     int coinsInCave = 0;

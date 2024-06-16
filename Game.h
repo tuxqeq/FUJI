@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Button.h"
 #include <fmt/core.h>
+#include <fstream>
 #pragma once
 
 struct Game {
@@ -10,6 +11,7 @@ struct Game {
     sf::Event event;
     sf::Font font;
     sf::Text text;
+    sf::Text whatlevel;
     //Window* window;
     sf::RectangleShape newGamebutton;
     int currentLevel;
@@ -40,6 +42,8 @@ struct Game {
     auto mainmenu() -> void;
     auto levelEnd() -> void;
     auto levelfailed() -> void;
+    auto readsave() -> void;
+    auto writeData() -> void;
 };
 
 

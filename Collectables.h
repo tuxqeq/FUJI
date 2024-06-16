@@ -12,6 +12,9 @@ struct Collectables {
     sf::Texture texture;
     sf::Sprite sprite;
     bool collected;
+    bool heal = false;
+    bool hit = false;
+    bool speed = false;
 
     Collectables();
     auto update(float time) -> void;

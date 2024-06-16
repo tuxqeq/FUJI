@@ -7,18 +7,18 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w                            d                                                                                                                       w",
                 "w                            d                                                                                                                       w",
                 "w                            d                                                                                                                       w",
+                "w                        E   d                                                                                                                       w",
                 "w                            d                                                                                                                       w",
                 "w                            d                                                                                                                       w",
-                "w                            d                                     w               kk                                                                w",
-                "w                            d                                                      k  k         w                                                   w",
-                "w                        E   d                                                      k      k  k                                                      w",
-                "w                                                                               E   kkk   kkk  kkk                           w                       w",
-                "w                        b                              b        p              E     k  k         k                           kk                    w",
-                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
-                "w                          b b                        bbb            bb         E           rr                          d     k                      w",
-                "w             c    p     c   b                       bbbb            bbb        E         rrrr           G           g       k   kk                  w",
-                "w          bbbbbbbbbbbb  b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
-                "w   e c bssbqqQQQqqQQQqc e esbssseesbbc      c     bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00            w",
+                "w                            d                                                                                                                       w",
+                "w                            d                                                                                                                       w",
+                "w                                                                                                                                                   Ew",
+                "w                        b                              b      c p                                                                                  Ew",
+                "w                            b                        cbb   bbbbbb   b                                                                              Ew",
+                "w                          b b                       cbbb            bb                                                                             Ew",
+                "w             c    p     c   b                      cbbbb            bbb                                                                            Ew",
+                "w          bbbbbbbbbbbb  b   b      bb    c c      cbbbbb            bbbb                                                                           Ew",
+                "w   e c bssbqqQQQqqQQQqc e esbssseesbbscc sc css   bbbbbbssssssssssssbbbbb                                                                          Ew",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
@@ -76,6 +76,7 @@ Level::Level(int num) : num(num){
     texture.loadFromFile("../assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("../assets/Level/spike.png");
+    spike.loadFromFile("../assets/Level/cloud.png");
     curlevel = levels[num];
     //enemy = new Enemy("slime.png", 0, 500, 500, 1);
     numOfEnemy = 0;
