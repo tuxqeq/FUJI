@@ -21,7 +21,7 @@ Game::Game() {
     text.setLetterSpacing(0.02);
     text.setOutlineThickness(0.3);
     text.setOutlineColor(sf::Color(255, 32, 161, 255));
-    text.setPosition(window->getSize().x - 170, 40);
+    text.setPosition(window->getSize().x - 250, 40);
 
     whatlevel = sf::Text("you are on level:", font, 14);
     whatlevel.setFillColor(sf::Color::White);
@@ -29,6 +29,13 @@ Game::Game() {
     whatlevel.setOutlineThickness(0.3);
     whatlevel.setOutlineColor(sf::Color(255, 32, 161, 255));
     whatlevel.setPosition(410, 270);
+
+    infoText = sf::Text("you are on level:", font, 14);
+    infoText.setFillColor(sf::Color::White);
+    infoText.setLetterSpacing(0.02);
+    infoText.setOutlineThickness(0.3);
+    infoText.setOutlineColor(sf::Color(255, 32, 161, 255));
+    infoText.setPosition(30, 470);
 }
 
 Game::~Game(){
@@ -96,6 +103,10 @@ auto Game::update(float time) -> void{
     if(not ingame and not inmidlev and not inlevFailed){
         std::string levelnum = fmt::format("You are on level: {} ", currentLevel+1);
         whatlevel.setString(levelnum);
+        std::string info = fmt::format("Moving is A(left), S(crawl), D(right), Space(jump/uncrawl) and arrows."
+                                       "\n\nBy pressing R you can hit enemies and break blocks creating caves."
+                                       "\n\nEvery coin you collect can speed up you, hit you and heal you(Chances are random)");
+        infoText.setString(info);
     }
     pollEvents();
     background->setSize(window->getSize());
@@ -119,6 +130,7 @@ auto Game::render() -> void{
         window->draw(newGame->shape);
         window->draw(continueGame->shape);
         window->draw(whatlevel);
+        window->draw(infoText);
     }
     else if(inmidlev){
         window->draw(nextLevel->shape);
@@ -136,7 +148,7 @@ auto Game::render() -> void{
         window->draw(restart->shape);
     }
     window->draw(character->sprite);
-    text.setPosition(window->getSize().x - 170, 50);
+    text.setPosition(window->getSize().x - 200, 50);
     window->draw(text);
 
     window->display();

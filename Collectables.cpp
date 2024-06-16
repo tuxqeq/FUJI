@@ -5,7 +5,7 @@
 Collectables::Collectables() {
     std::random_device rd;
     int random = rd() % 4;
-    int random2 = rd() % 3;
+    int random2 = rd() % 6;
 
     switch (random) {
         case 0: {

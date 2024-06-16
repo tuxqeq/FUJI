@@ -4,59 +4,59 @@
 std::vector<std::vector<std::string>> Level::levels = {
         {
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                        E   d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                                                                                                                                                   Ew",
-                "w                        b                              b      c p                                                                                  Ew",
-                "w                            b                        cbb   bbbbbb   b                                                                              Ew",
-                "w                          b b                       cbbb            bb                                                                             Ew",
-                "w             c    p     c   b                      cbbbb            bbb                                                                            Ew",
-                "w          bbbbbbbbbbbb  b   b      bb    c c      cbbbbb            bbbb                                                                           Ew",
-                "w   e c bssbqqQQQqqQQQqc e esbssseesbbscc sc css   bbbbbbssssssssssssbbbbb                                                                          Ew",
+                "w                            d                                                          cE                                                           w",
+                "w                            d                                                       c                            cc    E                           Ew",
+                "w                            d                                                       b   ssssssss            cc   bbssss                    c   c    w",
+                "w                            d                                                c  cc c    bbbbbbbb       cc   bb     bbbb                c c e c e c Ew",
+                "w                        E  Ed                                                bbbbbbb                   bb                           c  C C C C C C Cw",
+                "w                            d                                            ssss       cccceccccccp   c                       cc    c  bsssssssssssssssw",
+                "w                            d                                            bbbb       bbbbbbbbbbbbb  b                       CC    CCCCCCCCCCCCCCCCCCCw",
+                "w                           dd                                                                                          bb      b                    w",
+                "w      ss    pss    pebsc                               e                                              b cccc ss  ccccbssssssssssssssssssssssssssssssw",
+                "w      bbbbbbbbbbbbbbbbbbb                              b      c p                              c   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbw",
+                "w                            b                        cbb   bbbbbb   bc                             b               b                c               w",
+                "w                          b b                       cbbb            bbc                          bbb    cccccccc   b           c    b              Ew",
+                "w             c    p     c   b                      cbbbb            bbbc                         b     bbbbbbbbbb          cc  b    b              Ew",
+                "w          bbbbbbbbbbbb  b   b      bb     cc      cbbbbb            bbbb    ccc  s              bb                         bb      bbb e   cc   c  Ew",
+                "w   e c bssbqqQQQqqQQQqc e esbssseesbbscc sc css   bbbbbbssssssssssssbbbbb    pcccbccs  ssbsc   bbbsssssssssssssssssbbssbbsbssssssbbbbbbbsssbbsssbbbEw",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                     w               kk                                                                w",
-                "w                            d                                                      k  k         w                                                   w",
-                "w                        E   d                                                      k      k  k                                                      w",
-                "w                                                                               E   kkk   kkk  kkk                           w                       w",
-                "w                        b                              b        p              E     k  k         k                           kk                    w",
-                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
-                "w          e               b b                        bbb            bb         E           rr                          d     k                      w",
-                "w          b  b              b                       bbbb            bbb        E         rrrr           G           g       k   kk                  w",
-                "w          bc b c        b   b      bb              bbbbb            bbbb       E c      rrrrr                       g     k     k    t0             w",
-                "w   e    sbbbbbbbss    p e esbssseesbb             bbbbbbssssssssssssbbbbb      E k k     rrrrrr      d              g   kk       k    00            w",
+                "w                                                                                                                    E                               w",
+                "w                CC                                    C                                                                             cc              w",
+                "w                     CC           C                                                                              cc                 CC              w",
+                "w         CC                                                                                                 sssssbb cc     CC                   E   w",
+                "w                              C           C                               C                                 bbbbb   bb cc        CC                 w",
+                "w                CC                   C                                                                                 bb cc                        w",
+                "w                                                                                                                          bb cc                     w",
+                "w                                                                                                                        cc   bb cc                  w",
+                "w                                                                                                                        CC      bb cc               w",
+                "w                                                                                                                                   bb cc            w",
+                "w                                                                                      cec                                             bb cc         w",
+                "w          e                                          e                                bbb                                                bb         w",
+                "w          b  b                                      bbbbsse      p sbbb             bsssssb      ss     p      p  ese    p                       p  w",
+                "w          bc b c                                   bbbbbbbbbbbbbbbbbbbbb          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ccc bbbbbbbb w",
+                "w   e    sbbbbbbbss        e    p     e   p        bbbbbbQQQQQQQQQQQbbbbbb       e QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQssQQQQQQQQQQw",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                                                                                                       w",
-                "w                            d                                     w               kk                                                                w",
-                "w                            d                                                      k  k         w                                                   w",
-                "w                        E   d                                                      k      k  k                                                      w",
-                "w                                                                               E   kkk   kkk  kkk                           w                       w",
-                "w                        b                              b                       E     k  k         k                           kk                    w",
-                "w                            b                         bb   bbbbbb   b          E    kk     r   kk            g              k  k    d               w",
-                "w          e               b b                        bbb            bb         E           rr                          d     k                      w",
-                "w          b  b              b                       bbbb            bbb                  rrrr           G           g       k   kk                  w",
-                "w          bc b c        b   b      bb              bbbbb            bbbb         c      rrrrr                       g     k     k    t0             w",
-                "w                                                  bbbbbbssssssssssssbbbbb        k k     rrrrrr      d              g   kk       k    00            w",
+                "w                                                                                ccc                                                              E  w",
+                "w   c                                                                         CCCCCC                          ss   ss    ss         CCCCCCCCCCCCCCC  w",
+                "w    c                                                                      C                             CCCCCCCCCCCCCCCCCCC  CCCC                 Ew",
+                "w    b   bbb  cc C              c                                         C                                                                         Ew",
+                "w    bb    b  CC    C         c C   ss                                CCC                  C             C                                          Ew",
+                "w    b     b           C  ccc C    CCCC                            CC                     p    C       p                     c c c c ccc c c c c c   w",
+                "w    b   bbb              CCC            C  C  C  C  C  C  C  C  C                    CCCCC        CCCCCC                    C C C C CCC C C C C C C w",
+                "w    b     bsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssw",
+                "w    bb    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbw",
+                "w    b     b                                                                                                                ccc                      w",
+                "w    b    bb                                                                                                                   p                     w",
+                "w    bb                           b                                                         eee  e                       bbbbbbbbb                   w",
+                "w    b                            sssbbbbbssb ss  ss   bssbbbbssb   ccccccccccccpccccccccccsbbbssb      p   eee    bssbssbcccccccbsee         p ss   w",
+                "w    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb    cbbbbbbbbbbbbbbbb cc bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c bbbbbbbbbbbbbbbbbbbbbbbbbbb       bbbbbbbbbbbbbbbbbbb w",
+                "w  e QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ c  pQQQQQQQQQQQQQQQQ ss QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ e QQQQQQQQQQQQQQQQQQQQQQQQQQQcebssbeQQQQQQQQQQQQQQQQQQQ w",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         }
 };
@@ -76,48 +76,70 @@ Level::Level(int num) : num(num){
     texture.loadFromFile("../assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("../assets/Level/spike.png");
-    spike.loadFromFile("../assets/Level/cloud.png");
+    cloud.loadFromFile("../assets/Level/clouds.png");
     curlevel = levels[num];
     //enemy = new Enemy("slime.png", 0, 500, 500, 1);
     numOfEnemy = 0;
     numOfCoin = 0;
     enemies = std::vector<Enemy*> {
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
-        new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
+        new Enemy("slime.png", 0, 10000, 10000, 2),new Enemy("slime.png", 0, 10000, 10000, 2),
         new Enemy("slime.png", 0, 10000, 10000, 2)
     };
 
     coins = std::vector<Collectables*> {
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
+        new Collectables(), new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
+        new Collectables(),new Collectables(), new Collectables(), new Collectables(),
     };
     coinsInCave = coins.size() - 1;
 }
@@ -227,6 +249,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     shape.setTextureRect(sf::IntRect(288, 113, 32, 15));
                 if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] != 'q')
                     shape.setTextureRect(sf::IntRect(320, 113, 32, 15));
+                shape.setScale(1.5, 1.5);
             }
             if(curlevel[i][j] == 'Q') {
                 curlevel[i][j] = 'q';
@@ -246,6 +269,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     shape.setTextureRect(sf::IntRect(288, 113, 32, 15));
                 if (curlevel[i][j - 1] != 'q' and curlevel[i][j + 1] != 'q')
                     shape.setTextureRect(sf::IntRect(320, 113, 32, 15));
+                shape.setScale(1.5, 1.5);
             }
             if(curlevel[i][j] == 'w') {
                 shape.setTextureRect(sf::IntRect(360,240, 48, 48));
@@ -287,7 +311,8 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 }
             }
             if(curlevel[i][j] == 'C') {
-                shape.setTextureRect(sf::IntRect(360,240, 48, 48));
+                shape.setTexture(cloud);
+                shape.setTextureRect(sf::IntRect(0,0, 34, 34));
                 shape.setScale(1.5, 1.5);
             }
             if(curlevel[i][j] == 's') {
@@ -295,10 +320,9 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                 shape.setTextureRect(sf::IntRect(0, 0, 48, 48));
                 shape.setScale(1, 1);
             }
-            if(curlevel[i][j] == ' ') continue;
-            //shape.setScale(1.5, 1.5);
-            shape.setPosition(j*48 - pair.first/* - wnd->getSize().x/2*/,
-                              i*48 - pair.second - 48/* + wnd->getSize().y/1.5*/);
+            if(curlevel[i][j] == ' ' or curlevel[i][j] == 'E') continue;
+            shape.setPosition(j*48 - pair.first,
+                              i*48 - pair.second - 48);
             wnd->draw(shape);
         }
     }

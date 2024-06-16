@@ -58,7 +58,7 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     jumpH -= speedY*time;
     bool ableToJump = false;
     sprite.setPosition(x - offsetX, y-offsetY - 72);
-    if(inGame and x > 200) offsetX = x - 200;
+    if(inGame and x > 200 and x < 5800) offsetX = x - 200;
     if(y < 400 and inGame) offsetY = y - 400;
     speed = 0;
     jumpTimer += time;
