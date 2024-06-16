@@ -1,7 +1,7 @@
+#pragma once
 #include <sfml/Graphics.hpp>
 #include "Level.h"
-//#include "Game.h"
-#pragma once
+
 
 struct Character {
     float x, y, w, h, speedY, speed, jumpH = 0;

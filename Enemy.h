@@ -1,7 +1,6 @@
 #pragma once
 #include <sfml/Graphics.hpp>
 #include <fmt/ranges.h>
-//#include "Level.h"
 
 struct Enemy {
     float x, y, speed = 0;
@@ -16,7 +15,6 @@ struct Enemy {
     int maxlen = 200;
     Enemy(std::string name, float speed, float x, float y, int health);
     auto update(float time) -> void;
-    //auto collision() -> void;
     auto draw(sf::RenderWindow* wnd) -> void;
     auto setPosition(float x, float y) -> void;
     auto setText(std::string name) -> void;

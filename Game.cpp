@@ -209,7 +209,6 @@ auto Game::levelfailed() -> void {
     ingame = false;
     inlevFailed = true;
     character->inGame = false;
-    //character->saveScore();
     character->health += 1;
     window->close();
     window = new sf::RenderWindow(sf::VideoMode(600, 400), "game",
@@ -217,11 +216,10 @@ auto Game::levelfailed() -> void {
     character->setPosition(10000, 10000);
 }
 
-auto Game::readsave() -> void {
-    std::string filePath = "../saving/save.txt";
+auto Game::readsave() -> void { //made with chatGpt help
+    std::string filePath = "../save.txt";
     std::ifstream infile(filePath);
     if (infile.good()) {
-        int intValue1, intValue2;
 
         infile >> currentLevel;
         infile >> CollectedCoins;
@@ -238,8 +236,8 @@ auto Game::readsave() -> void {
     }
 }
 
-auto Game::writeData() -> void {
-    std::string filePath = "../saving/save.txt";
+auto Game::writeData() -> void { //made with chatGpt help
+    std::string filePath = "../save.txt";
     std::ofstream outfile(filePath);
     if (outfile.is_open()) {
         outfile << currentLevel << "\n" << CollectedCoins << "\n";

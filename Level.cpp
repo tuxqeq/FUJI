@@ -37,7 +37,7 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w          e                                          e                                bbb                                                bb         w",
                 "w          b  b                                      bbbbsse      p sbbb             bsssssb      ss     p      p  ese    p                       p  w",
                 "w          bc b c                                   bbbbbbbbbbbbbbbbbbbbb          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ccc bbbbbbbb w",
-                "w   e    sbbbbbbbss        e    p     e   p        bbbbbbQQQQQQQQQQQbbbbbb       e QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQssQQQQQQQQQQw",
+                "w   e    sbbbbbbbss        e    p     e       p    bbbbbbQQQQQQQQQQQbbbbbb       e QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQssQQQQQQQQQQw",
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         },
         {
@@ -62,23 +62,13 @@ std::vector<std::vector<std::string>> Level::levels = {
 };
 
 
-/*The "0" represents solid ground or boundaries.
-The "s" s represents spikes
-The "w" represents walls
-The "c" represents coins or collectibles.
-The "b" represents a kind of platform or block.
-The "r" represents a rough terrain or something similar.
-The "G" represents the goal or endpoint.*/
-
 Level::Level(int num) : num(num){
-    //shape = sf::RectangleShape(sf::Vector2f(48, 48));
     background = new Background("level1.png");
     texture.loadFromFile("../assets/Level/nicefloor.png");
     shape.setTexture(texture);
     spike.loadFromFile("../assets/Level/spike.png");
     cloud.loadFromFile("../assets/Level/clouds.png");
     curlevel = levels[num];
-    //enemy = new Enemy("slime.png", 0, 500, 500, 1);
     numOfEnemy = 0;
     numOfCoin = 0;
     enemies = std::vector<Enemy*> {
@@ -227,7 +217,6 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
                     if (curlevel[i][j - 1] != 'b' and curlevel[i][j + 1] != 'b')
                         shape.setTextureRect(sf::IntRect(272, 160, 32, 32));
                 }
-                //shape.setTextureRect(sf::IntRect(160, 32, 32, 32));
                 if(curlevel[i - 1][j] != 'b'
                    and curlevel[i + 1][j] != 'b'
                    and curlevel[i][j + 1] != 'b'

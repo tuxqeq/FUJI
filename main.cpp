@@ -13,4 +13,3 @@ auto main()  -> int{
         game.render();
     }
 }
-//хуйня не рабоает

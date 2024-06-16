@@ -13,7 +13,6 @@ struct Game {
     sf::Text text;
     sf::Text whatlevel;
     sf::Text infoText;
-    //Window* window;
     sf::RectangleShape newGamebutton;
     int currentLevel;
     sf::Texture textureNGButton;

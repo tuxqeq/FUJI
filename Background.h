@@ -9,7 +9,6 @@ struct Background {
     sf::Vector2u textsize;
     Background(std::string name);
 
-
     void setSize(sf::Vector2u vector2);
 
     sf::Sprite getBackground() const;

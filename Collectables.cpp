@@ -1,7 +1,4 @@
 #include "Collectables.h"
-//TODO make heal
-//TODO make speedup
-//TODO make damage up
 Collectables::Collectables() {
     std::random_device rd;
     int random = rd() % 4;

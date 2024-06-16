@@ -21,13 +21,11 @@ auto Enemy::update(float time) -> void {
         speed = -speed;
         road = 0;
     }
-    //collision();
     deadtimer += time * 0.009;
     curFrame += time * 0.009;
     if (curFrame > 4) curFrame-= 4;
     sprite.setTextureRect(sf::IntRect(24*int(curFrame), 0, 24, 24));
     if (hit) {
-        //sprite.setTextureRect(sf::IntRect(48, 48, 24, 24));
         deadtimer = 0;
         hit = false;
     }

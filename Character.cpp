@@ -1,7 +1,6 @@
 #include "Character.h"
 #include "Level.h"
 #include <fmt/core.h>
-//TODO create animation class and handle animations there
 Character::Character(float x, float y, float w, float h, std::string name, bool inGame)
         : x(x), y(y), w(w), h(h), name(name), inGame(inGame){
     image.loadFromFile("../assets/Character/" + name);
@@ -21,7 +20,6 @@ Character::Character(float x, float y, float w, float h, std::string name, bool 
 
 auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) -> void {
     sprite.setScale(0.75, 0.75);
-    //else sprite.setScale(1, 1);
     redtimer += time;
     speedupTimer += time;
     if(redtimer < 100) {
@@ -54,7 +52,6 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     if(inGame) {
         collisionX(1);
     }
-    //isOnGround = false;
     jumpH -= speedY*time;
     bool ableToJump = false;
     sprite.setPosition(x - offsetX, y-offsetY - 72);
@@ -88,7 +85,6 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
 
     if(not inGame and jumpH <= 0){
         speedY = 0;
-        //y = grdlevel;
         isOnGround = true;
         jumping = false;
     }
@@ -189,7 +185,7 @@ auto Character::setPosition(float x, float y) -> void {
 }
 
 auto Character::crawlingAnim(float time, int dir, bool isOnGround) -> void {
-    if(isOnGround and /*(sf::Keyboard::isKeyPressed(sf::Keyboard::S) or sf::Keyboard::isKeyPressed(sf::Keyboard::Down) or */crawling){
+    if(isOnGround and crawling){
         speed = speed/2;
         crawling = true;
         if(crawlFrame < 5){
@@ -367,16 +363,13 @@ auto Character::CoinCollision() -> void {
                 if(i->hit) {
                     health -= 1;
                     redtimer = 0;
-                    //fmt::println("hit");
                 }
                 else if(i->heal){
                     if (health < 5) health += 1;
-                    //fmt::println("heal");
                 }
                 else if(i->speed) {
                     speedUp = true;
                     speedupTimer = 0;
-                    //fmt::println("speed Up");
                 }
 
                 i->collect();
