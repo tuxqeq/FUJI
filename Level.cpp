@@ -52,7 +52,7 @@ std::vector<std::vector<std::string>> Level::levels = {
                 "w    b     bsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssw",
                 "w    bb    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbw",
                 "w    b     b                                                                                                                ccc                      w",
-                "w    b    bb                                                                                                                   p                     w",
+                "w    b   bbb                                                                                                                   p                     w",
                 "w    bb                           b                                                         eee  e                       bbbbbbbbb                   w",
                 "w    b                            sssbbbbbssb ss  ss   bssbbbbssb   ccccccccccccpccccccccccsbbbssb      p   eee    bssbssbcccccccbsee         p ss   w",
                 "w    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb    cbbbbbbbbbbbbbbbb cc bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c bbbbbbbbbbbbbbbbbbbbbbbbbbb       bbbbbbbbbbbbbbbbbbb w",
@@ -243,7 +243,7 @@ auto Level::draw(sf::RenderWindow *wnd, std::pair<float, float> pair) -> void {
             if(curlevel[i][j] == 'Q') {
                 curlevel[i][j] = 'q';
                 std::random_device rd2;
-                int random2 = rd2() % 20;
+                int random2 = rd2() % 50;
                 if(not coins[coinsInCave]->collected and random2 < 12 and coinsInCave > 15){
                     fmt::println("{}", coinsInCave);
                     coins[coinsInCave]->setPosition(j * 48, i * 48 - 32);

@@ -12,7 +12,7 @@ struct Character {
     int coinsCollected = 0;
     bool minusheart = false;
     int health = 5;
-    float redtimer = 100;
+    float redtimer = 200;
     float speedupTimer = 2000;
     bool inGame;
     int dir=0;
@@ -33,6 +33,7 @@ struct Character {
     bool speedUp = false;
     float frame, hitframe, crawlFrame = 0;
     Character(float x, float y, float w, float h, std::string name, bool inGame);
+    ~Character();
     auto crawlingAnim(float time, int dir, bool isOnGround) -> void;
     auto uncrawlingAnim(float time, int dir) -> void;
     void collisionX(int num);

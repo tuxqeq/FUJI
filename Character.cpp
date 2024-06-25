@@ -22,11 +22,6 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     sprite.setScale(0.75, 0.75);
     redtimer += time;
     speedupTimer += time;
-    if(redtimer < 100) {
-        sprite.setColor(sf::Color(255, 0, 0, 127));
-    }else{
-        sprite.setColor(sf::Color::White);
-    }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) and not jumping and hitTimer > hitCooldown){
         hit = true;
@@ -37,6 +32,8 @@ auto Character::update(float time, sf::Vector2u vector2, sf::RenderWindow* wnd) 
     if(speedUp) {
         sprite.setColor(sf::Color(255, 0, 135, 127));
         speed*=1.5;
+    }else if(redtimer < 200) {
+        sprite.setColor(sf::Color(255, 0, 0, 127));
     }else{
         sprite.setColor(sf::Color::White);
     }
@@ -222,7 +219,7 @@ auto Character::collisionX(int num) -> void {
                 }
             }
         }
-        if(k >= (x)/48 and k < (x + 48)/48) {
+        if(k >= (x)/48 and k < (x + 32)/48) {
             if (clevel->curlevel[int(y + 16) / 48][k] == 's') {
                 health -= 1;
                 offsetX = 0;
@@ -316,7 +313,7 @@ auto Character::EnemyCollision() -> void {
         spritecharForhit.width = 72;
         spritecharForhit.height = 72;
 
-        spritechar.width = 15;
+        spritechar.width = 20;
         spritechar.height = 48;
         spritechar.left += 10;
 
@@ -338,7 +335,6 @@ auto Character::EnemyCollision() -> void {
                 health -= 1;
                 redtimer = 0;
                 x = speed >= 0 ? x - 50 : x + 50;
-                sprite.setColor(sf::Color(255, 0, 0, 127));
                 fmt::println("{}", health);
             }
 
@@ -377,5 +373,9 @@ auto Character::CoinCollision() -> void {
             }
         }
     }
+}
+
+Character::~Character() {
+    delete this->clevel;
 }
 

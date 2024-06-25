@@ -38,9 +38,7 @@ Game::Game() {
     infoText.setPosition(30, 470);
 }
 
-Game::~Game(){
-    delete this->window;
-}
+
 
 bool Game::running() const {
     return window->isOpen();
@@ -245,4 +243,17 @@ auto Game::writeData() -> void { //made with chatGpt help
     } else {
         std::cerr << "Error opening the file '" << filePath << "' for writing.\n";
     }
+}
+
+Game::~Game(){
+    delete this->window;
+    delete this->character;
+    delete this->background;
+    delete this->level;
+    delete this->newGame;
+    delete this->continueGame;
+    delete this->nextLevel;
+    delete this->goToMainMenu;
+    delete this->restart;
+    delete this->restart2;
 }

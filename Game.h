@@ -29,7 +29,6 @@ struct Game {
     Button* goToMainMenu;
     Button* restart;
     Button* restart2;
-    Button* intstructions;
 
     Game();
     ~Game();

@@ -52,7 +52,6 @@ auto Enemy::setOffset(std::pair<float, float> pair) -> void {
 }
 
 
-
 auto Enemy::enemyhit() -> void {
     hit = true;
     health -= 1;
